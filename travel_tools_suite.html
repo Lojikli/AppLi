@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Tools Pro - Free Travel Planning & Lifestyle Tools Suite</title>
+    <meta name="description" content="Free travel planning tools: flight price predictor, visa checker, currency converter, packing lists, time zone planner. Save money and travel smarter.">
+    <meta name="keywords" content="travel tools, flight prices, visa requirements, currency converter, packing list, time zone converter, travel planner">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .ad-banner {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .tool-description {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .result-card.show {
+            display: block;
+        }
+
+        .price-trend {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .visa-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .visa-required {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .visa-free {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .visa-eta {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .currency-rate {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .packing-category {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .packing-category h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .packing-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .packing-item {
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .timezone-result {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .ad-sidebar {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            border: 2px dashed #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Travel Tools Pro</h1>
+            <p>Complete Travel Planning & Lifestyle Tools Suite</p>
+            <p>Save money, travel smarter, and plan better with our comprehensive collection of free travel tools</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">2.3M+</div>
+                    <div class="stat-label">Monthly Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$12K</div>
+                    <div class="stat-label">Avg. Savings Per Trip</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Trips Planned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-banner">
+            <h3>Premium Travel Advertising Space</h3>
+            <p>Reach 2.3M+ travel enthusiasts monthly - Contact us for premium ad placement</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Flight Price Predictor -->
+            <div class="tool-card">
+                <div class="tool-icon">✈️</div>
+                <h3 class="tool-title">Flight Price Predictor</h3>
+                <p class="tool-description">Predict flight price trends and get alerts when prices drop. Save up to 40% on flights!</p>
+                
+                <div class="form-group">
+                    <label for="fromCity">From</label>
+                    <input type="text" id="fromCity" placeholder="New York (NYC)" value="New York (NYC)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="toCity">To</label>
+                    <input type="text" id="toCity" placeholder="London (LHR)" value="London (LHR)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="travelDate">Travel Date</label>
+                    <input type="date" id="travelDate">
+                </div>
+                
+                <button class="btn" onclick="predictFlightPrices()">Predict Prices</button>
+                <button class="btn btn-secondary" onclick="setAlert()">Set Price Alert</button>
+                
+                <div id="flightResults" class="result-card">
+                    <h4>Price Prediction Results</h4>
+                    <div id="flightPrediction"></div>
+                </div>
+            </div>
+
+            <!-- Visa Requirements Checker -->
+            <div class="tool-card">
+                <div class="tool-icon">🛂</div>
+                <h3 class="tool-title">Visa Requirements Checker</h3>
+                <p class="tool-description">Check visa requirements between any two countries. Stay compliant and avoid travel surprises!</p>
+                
+                <div class="form-group">
+                    <label for="passportCountry">Your Passport Country</label>
+                    <select id="passportCountry">
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="BR">Brazil</option>
+                        <option value="IN">India</option>
+                        <option value="CN">China</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="destinationCountry">Destination Country</label>
+                    <select id="destinationCountry">
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="AU">Australia</option>
+                        <option value="BR">Brazil</option>
+                        <option value="IN">India</option>
+                        <option value="CN">China</option>
+                        <option value="TH">Thailand</option>
+                        <option value="EG">Egypt</option>
+                        <option value="ZA">South Africa</option>
+                        <option value="MX">Mexico</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="travelPurpose">Travel Purpose</label>
+                    <select id="travelPurpose">
+                        <option value="tourism">Tourism</option>
+                        <option value="business">Business</option>
+                        <option value="transit">Transit</option>
+                        <option value="study">Study</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="checkVisaRequirements()">Check Requirements</button>
+                
+                <div id="visaResults" class="result-card">
+                    <h4>Visa Requirements</h4>
+                    <div id="visaStatus"></div>
+                </div>
+            </div>
+
+            <!-- Currency Converter Pro -->
+            <div class="tool-card">
+                <div class="tool-icon">💱</div>
+                <h3 class="tool-title">Currency Converter Pro</h3>
+                <p class="tool-description">Real-time currency conversion with historical charts and rate alerts. Never lose money on exchange rates!</p>
+                
+                <div class="form-group">
+                    <label for="fromCurrency">From Currency</label>
+                    <select id="fromCurrency">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="toCurrency">To Currency</label>
+                    <select id="toCurrency">
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" value="1000" placeholder="Enter amount">
+                </div>
+                
+                <button class="btn" onclick="convertCurrency()">Convert Currency</button>
+                <button class="btn btn-secondary" onclick="showRateHistory()">Rate History</button>
+                
+                <div id="currencyResults" class="result-card">
+                    <div id="conversionResult"></div>
+                </div>
+            </div>
+
+            <!-- Time Zone Meeting Planner -->
+            <div class="tool-card">
+                <div class="tool-icon">🌏</div>
+                <h3 class="tool-title">Time Zone Meeting Planner</h3>
+                <p class="tool-description">Plan perfect meeting times across multiple time zones. Never miss a meeting again!</p>
+                
+                <div class="form-group">
+                    <label for="meetingTime">Proposed Meeting Time</label>
+                    <input type="datetime-local" id="meetingTime">
+                </div>
+                
+                <div class="form-group">
+                    <label for="timezone1">Location 1</label>
+                    <select id="timezone1">
+                        <option value="America/New_York">New York (EST/EDT)</option>
+                        <option value="America/Los_Angeles">Los Angeles (PST/PDT)</option>
+                        <option value="Europe/London">London (GMT/BST)</option>
+                        <option value="Europe/Paris">Paris (CET/CEST)</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                        <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                        <option value="Asia/Dubai">Dubai (GST)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timezone2">Location 2</label>
+                    <select id="timezone2">
+                        <option value="Europe/London">London (GMT/BST)</option>
+                        <option value="America/New_York">New York (EST/EDT)</option>
+                        <option value="America/Los_Angeles">Los Angeles (PST/PDT)</option>
+                        <option value="Europe/Paris">Paris (CET/CEST)</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                        <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                        <option value="Asia/Dubai">Dubai (GST)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timezone3">Location 3 (Optional)</label>
+                    <select id="timezone3">
+                        <option value="">Select optional location</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="America/New_York">New York (EST/EDT)</option>
+                        <option value="America/Los_Angeles">Los Angeles (PST/PDT)</option>
+                        <option value="Europe/London">London (GMT/BST)</option>
+                        <option value="Europe/Paris">Paris (CET/CEST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                        <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                        <option value="Asia/Dubai">Dubai (GST)</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="calculateMeetingTimes()">Calculate Times</button>
+                <button class="btn btn-secondary" onclick="suggestOptimalTime()">Suggest Optimal Time</button>
+                
+                <div id="timezoneResults" class="result-card">
+                    <h4>Meeting Times</h4>
+                    <div id="meetingTimes"></div>
+                </div>
+            </div>
+
+            <!-- Smart Packing List Generator -->
+            <div class="tool-card">
+                <div class="tool-icon">🎒</div>
+                <h3 class="tool-title">Smart Packing List Generator</h3>
+                <p class="tool-description">Generate personalized packing lists based on destination, weather, and trip type. Never forget essentials!</p>
+                
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" id="destination" placeholder="Paris, France" value="Paris, France">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tripType">Trip Type</label>
+                    <select id="tripType">
+                        <option value="leisure">Leisure/Vacation</option>
+                        <option value="business">Business</option>
+                        <option value="adventure">Adventure/Outdoor</option>
+                        <option value="beach">Beach</option>
+                        <option value="city">City Break</option>
+                        <option value="backpacking">Backpacking</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="season">Season/Climate</label>
+                    <select id="season">
+                        <option value="spring">Spring (Mild)</option>
+                        <option value="summer">Summer (Hot)</option>
+                        <option value="fall">Fall (Cool)</option>
+                        <option value="winter">Winter (Cold)</option>
+                        <option value="tropical">Tropical</option>
+                        <option value="desert">Desert</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Trip Duration</label>
+                    <select id="duration">
+                        <option value="1-3">1-3 days</option>
+                        <option value="4-7">4-7 days</option>
+                        <option value="8-14">1-2 weeks</option>
+                        <option value="15+">2+ weeks</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="generatePackingList()">Generate Packing List</button>
+                <button class="btn btn-secondary" onclick="downloadPackingList()">Download PDF</button>
+                
+                <div id="packingResults" class="result-card">
+                    <h4>Your Personalized Packing List</h4>
+                    <div id="packingList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-sidebar">
+            <h3>Premium Travel Services</h3>
+            <p>Partner with us to reach 2.3M+ monthly travelers</p>
+            <p>Premium ad placement opportunities available</p>
+        </div>
+    </div>
+
+    <script>
+        // Set default meeting time to tomorrow at 2 PM
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(14, 0, 0, 0);
+        document.getElementById('meetingTime').value = tomorrow.toISOString().slice(0, 16);
+
+        // Set default travel date to next month
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        document.getElementById('travelDate').value = nextMonth.toISOString().slice(0, 10);
+
+        // Flight Price Predictor
+        function predictFlightPrices() {
+            const from = document.getElementById('fromCity').value;
+            const to = document.getElementById('toCity').value;
+            const date = document.getElementById('travelDate').value;
+            
+            const results = document.getElementById('flightResults');
+            const prediction = document.getElementById('flightPrediction');
+            
+            // Simulate price prediction
+            const currentPrice = Math.floor(Math.random() * 800) + 300;
+            const predictedChange = Math.floor(Math.random() * 200) - 100;
+            const confidence = Math.floor(Math.random() * 30) + 70;
+            
+            let trend = predictedChange > 0 ? '📈 Prices likely to increase' : '📉 Prices likely to decrease';
+            let savings = Math.abs(predictedChange);
+            
+            prediction.innerHTML = `
+                <div class="price-trend">
+                    <h5>${from} → ${to}</h5>
+                    <p><strong>Current Average Price:</strong> $${currentPrice}</p>
+                    <p><strong>Predicted Change:</strong> ${trend} by $${savings}</p>
+                    <p><strong>Confidence:</strong> ${confidence}%</p>
+                    <p><strong>Recommendation:</strong> ${predictedChange < 0 ? 'Wait 2-3 weeks before booking' : 'Book now for best prices'}</p>
+                </div>
+            `;
+            
+            results.classList.add('show');
+        }
+
+        function setAlert() {
+            alert('Price alert set! We\'ll email you when prices drop by 10% or more.');
+        }
+
+        // Visa Requirements Checker
+        function checkVisaRequirements() {
+            const passport = document.getElementById('passportCountry').value;
+            const destination = document.getElementById('destinationCountry').value;
+            const purpose = document.getElementById('travelPurpose').value;
+            
+            const results = document.getElementById('visaResults');
+            const status = document.getElementById('visaStatus');
+            
+            // Simulate visa requirements (simplified)
+            const visaData = {
+                'US-FR': { status: 'free', days: 90, notes: 'Visa-free for tourism up to 90 days' },
+                'US-JP': { status: 'free', days: 90, notes: 'Visa-free for tourism up to 90 days' },
+                'US-CN': { status: 'required', days: 0, notes: 'Tourist visa required. Apply 4-6 weeks in advance' },
+                'US-IN': { status: 'eta', days: 30, notes: 'E-visa available online. Process in 3-5 days' },
+                'UK-US': { status: 'eta', days: 90, notes: 'ESTA authorization required for Visa Waiver Program' },
+                'CA-AU': { status: 'eta', days: 90, notes: 'ETA required online before travel' }
+            };
+            
+            const key = `${passport}-${destination}`;
+            const visa = visaData[key] || { status: 'required', days: 30, notes: 'Visa requirements vary. Check embassy website' };
+            
+            let statusClass = visa.status === 'free' ? 'visa-free' : (visa.status === 'eta' ? 'visa-eta' : 'visa-required');
+            let statusText = visa.status === 'free' ? 'Visa-Free' : (visa.status === 'eta' ? 'E-Visa/ETA Required' : 'Visa Required');
+            
+            status.innerHTML = `
+                <div class="visa-status ${statusClass}">${statusText}</div>
+                <p><strong>Maximum Stay:</strong> ${visa.days > 0 ? visa.days + ' days' : 'Varies'}</p>
+                <p><strong>Details:</strong> ${visa.notes}</p>
+                <p><strong>Processing Time:</strong> ${visa.status === 'free' ? 'None' : (visa.status === 'eta' ? '3-5 days' : '2-6 weeks')}</p>
+            `;
+            
+            results.classList.add('show');
+        }
+
+        // Currency Converter
+        function convertCurrency() {
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            
+            const results = document.getElementById('currencyResults');
+            const conversionResult = document.getElementById('conversionResult');
+            
+            // Simulate exchange rates (simplified)
+            const rates = {
+                'USD-EUR': 0.85,
+                'USD-GBP': 0.73,
+                'USD-JPY': 110,
+                'EUR-USD': 1.18,
+                'EUR-GBP': 0.86,
+                'GBP-USD': 1.37,
+                'GBP-EUR': 1.16
+            };
+            
+            const rateKey = `${from}-${to}`;
+            const rate = rates[rateKey] || (1 / rates[`${to}-${from}`]) || 1.0;
+            const converted = (amount * rate).toFixed(2);
+            const fee = (amount * 0.02).toFixed(2); // 2% fee simulation
+            
+            conversionResult.innerHTML = `
+                <div class="currency-rate">
+                    <h4>${amount} ${from} = ${converted} ${to}</h4>
+                    <p>Exchange Rate: 1 ${from} = ${rate.toFixed(4)} ${to}</p>
+                    <p>Bank Fee Estimate: $${fee}</p>
+                    <p>Rate Updated: ${new Date().toLocaleString()}</p>
+                </div>
+            `;
+            
+            results.classList.add('show');
+        }
+
+        function showRateHistory() {
+            alert('Historical rate charts available in premium version!');
+        }
+
+        // Time Zone Meeting Planner
+        function calculateMeetingTimes() {
+            const meetingTime = new Date(document.getElementById('meetingTime').value);
+            const tz1 = document.getElementById('timezone1').value;
+            const tz2 = document.getElementById('timezone2').value;
+            const tz3 = document.getElementById('timezone3').value;
+            
+            const results = document.getElementById('timezoneResults');
+            const meetingTimes = document.getElementById('meetingTimes');
+            
+            // Simplified timezone conversion (would use proper timezone library in production)
+            const timezoneOffsets = {
+                'America/New_York': -5,
+                'America/Los_Angeles': -8,
+                'Europe/London': 0,
+                'Europe/Paris': 1,
+                'Asia/Tokyo': 9,
+                'Asia/Shanghai': 8,
+                'Australia/Sydney': 11,
+                'Asia/Dubai': 4
+            };
+            
+            function convertTime(baseTime, fromOffset, toOffset) {
+                const utc = new Date(baseTime.getTime() + (fromOffset * 60 * 60 * 1000));
+                return new Date(utc.getTime() - (toOffset * 60 * 60 * 1000));
+            }
+            
+            const baseOffset = timezoneOffsets[tz1] || 0;
+            const time1 = meetingTime;
+            const time2 = convertTime(meetingTime, baseOffset, timezoneOffsets[tz2] || 0);
+            const time3 = tz3 ? convertTime(meetingTime, baseOffset, timezoneOffsets[tz3] || 0) : null;
+            
+            let timeHTML = `
+                <div class="timezone-result">
+                    <h5>${tz1.split('/')[1]}</h5>
+                    <p>${time1.toLocaleString()}</p>
+                </div>
+                <div class="timezone-result">
+                    <h5>${tz2.split('/')[1]}</h5>
+                    <p>${time2.toLocaleString()}</p>
+                </div>
+            `;
+            
+            if (time3) {
+                timeHTML += `
+                    <div class="timezone-result">
+                        <h5>${tz3.split('/')[1]}</h5>
+                        <p>${time3.toLocaleString()}</p>
+                    </div>
+                `;
+            }
+            
+            meetingTimes.innerHTML = timeHTML;
+            results.classList.add('show');
+        }
+
+        function suggestOptimalTime() {
+            alert('AI-powered optimal time suggestions available in premium version!');
+        }
+
+        // Smart Packing List Generator
+        function generatePackingList() {
+            const destination = document.getElementById('destination').value;
+            const tripType = document.getElementById('tripType').value;
+            const season = document.getElementById('season').value;
+            const duration = document.getElementById('duration').value;
+            
+            const results = document.getElementById('packingResults');
+            const packingList = document.getElementById('packingList');
+            
+            // Generate packing items based on selections
+            const packingItems = {
+                clothing: {
+                    spring: ['Light jacket', 'Long pants', 'T-shirts', 'Comfortable shoes', 'Light sweater'],
+                    summer: ['Shorts', 'T-shirts', 'Sandals', 'Swimwear', 'Sun hat', 'Light dress'],
+                    fall: ['Warm jacket', 'Long pants', 'Layers', 'Closed shoes', 'Scarf'],
+                    winter: ['Heavy coat', 'Thermal underwear', 'Warm boots', 'Gloves', 'Winter hat'],
+                    tropical: ['Light clothing', 'Swimwear', 'Flip-flops', 'Sun protection', 'Quick-dry clothes'],
+                    desert: ['Long sleeves', 'Light colors', 'Closed shoes', 'Sun hat', 'Cooling towel']
+                },
+                essentials: ['Passport', 'Travel insurance', 'Phone charger', 'Medications', 'Toiletries'],
+                electronics: ['Phone', 'Camera', 'Power bank', 'Adapter', 'Headphones'],
+                business: tripType === 'business' ? ['Business attire', 'Laptop', 'Documents', 'Business cards'] : [],
+                adventure: tripType === 'adventure' ? ['Hiking boots', 'Backpack', 'First aid kit', 'Water bottle'] : [],
+                beach: tripType === 'beach' ? ['Sunscreen', 'Beach towel', 'Snorkel gear', 'Waterproof bag'] : []
+            };
+            
+            const clothing = packingItems.clothing[season] || packingItems.clothing.spring;
+            
+            let listHTML = `
+                <div class="packing-category">
+                    <h4>🧳 Clothing (${season})</h4>
+                    <div class="packing-items">
+                        ${clothing.map(item => `<div class="packing-item">• ${item}</div>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="packing-category">
+                    <h4>📋 Essentials</h4>
+                    <div class="packing-items">
+                        ${packingItems.essentials.map(item => `<div class="packing-item">• ${item}</div>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="packing-category">
+                    <h4>🔌 Electronics</h4>
+                    <div class="packing-items">
+                        ${packingItems.electronics.map(item => `<div class="packing-item">• ${item}</div>`).join('')}
+                    </div>
+                </div>
+            `;
+            
+            if (packingItems.business.length > 0) {
+                listHTML += `
+                    <div class="packing-category">
+                        <h4>💼 Business</h4>
+                        <div class="packing-items">
+                            ${packingItems.business.map(item => `<div class="packing-item">• ${item}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (packingItems.adventure.length > 0) {
+                listHTML += `
+                    <div class="packing-category">
+                        <h4>🏔️ Adventure</h4>
+                        <div class="packing-items">
+                            ${packingItems.adventure.map(item => `<div class="packing-item">• ${item}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (packingItems.beach.length > 0) {
+                listHTML += `
+                    <div class="packing-category">
+                        <h4>🏖️ Beach</h4>
+                        <div class="packing-items">
+                            ${packingItems.beach.map(item => `<div class="packing-item">• ${item}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            packingList.innerHTML = listHTML;
+            results.classList.add('show');
+        }
+
+        function downloadPackingList() {
+            alert('PDF download feature available in premium version!');
+        }
+    </script>
+</body>
+</html>

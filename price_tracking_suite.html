@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealHunter Pro - Free Price Tracker, Deal Finder & Shopping Tools</title>
+    <meta name="description" content="Find the best deals across Amazon, Walmart, Target & more. Free price tracking, coupon finder, stock checker and deal alerts. Save money on every purchase!">
+    <meta name="keywords" content="price tracker, deal finder, coupon codes, price comparison, best deals, shopping tools, discount finder">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #FF6B35;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FF6B35, #F7931E, #FF6B35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FF6B35;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+        
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .tool-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #FF6B35;
+        }
+        
+        .price-comparison {
+            display: grid;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .store-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .store-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .store-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .price-info {
+            text-align: right;
+        }
+        
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #FF6B35;
+        }
+        
+        .original-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .savings {
+            font-size: 0.8rem;
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .visit-store {
+            background: #FF6B35;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .visit-store:hover {
+            background: #e55a2b;
+        }
+        
+        .coupon-results {
+            display: grid;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .coupon-card {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .coupon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(20px, -20px);
+        }
+        
+        .coupon-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .coupon-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .coupon-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .stock-indicator {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .in-stock {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .low-stock {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .out-of-stock {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .price-history {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .price-chart {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to right, #e8f5e8, #f0f8ff, #ffe8e8);
+            border-radius: 8px;
+            display: flex;
+            align-items: end;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: #FF6B35;
+            margin: 0 2px;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .chart-bar:hover {
+            background: #e55a2b;
+        }
+        
+        .ad-space {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            color: #6c757d;
+        }
+        
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #666;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+        
+        .footer-section a:hover {
+            color: #FF6B35;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">DealHunter Pro</div>
+            <nav class="nav-links">
+                <a href="#price-tracker">Price Tracker</a>
+                <a href="#deal-finder">Deal Finder</a>
+                <a href="#coupons">Coupons</a>
+                <a href="#stock-checker">Stock Checker</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Save Money on Every Purchase</h1>
+            <p>Track prices, find the best deals, discover coupon codes, and check stock across all major retailers. Your complete shopping toolkit.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">$2.3M+</div>
+                    <div class="stat-label">Total Savings</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">150K+</div>
+                    <div class="stat-label">Happy Users</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Retailers Tracked</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Price Monitoring</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad Space -->
+        <div class="ad-space">
+            <strong>Advertisement Space</strong><br>
+            728x90 Leaderboard Ad Unit
+        </div>
+
+        <div class="tools-grid">
+            <!-- Price Comparison Tool -->
+            <div class="tool-card" id="price-tracker">
+                <div class="tool-header">
+                    <div class="tool-icon">💰</div>
+                    <div class="tool-title">Price Comparison</div>
+                </div>
+                <div class="tool-description">
+                    Compare prices across Amazon, Walmart, Target, Best Buy and more. Find the best deal instantly.
+                </div>
+                
+                <div class="input-group">
+                    <label for="productSearch">Product Name or URL</label>
+                    <input type="text" id="productSearch" placeholder="e.g., iPhone 15 Pro, AirPods Pro, Nintendo Switch">
+                </div>
+                
+                <div class="input-group">
+                    <label for="categorySelect">Category</label>
+                    <select id="categorySelect">
+                        <option value="all">All Categories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="home">Home & Garden</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="books">Books</option>
+                        <option value="sports">Sports & Outdoors</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="searchPrices()">🔍 Find Best Prices</button>
+                
+                <div id="priceResults" class="results" style="display: none;">
+                    <h4>Price Comparison Results</h4>
+                    <div id="priceComparison" class="price-comparison"></div>
+                </div>
+            </div>
+
+            <!-- Deal Finder -->
+            <div class="tool-card" id="deal-finder">
+                <div class="tool-header">
+                    <div class="tool-icon">🎯</div>
+                    <div class="tool-title">Deal Finder</div>
+                </div>
+                <div class="tool-description">
+                    Discover the hottest deals, flash sales, and limited-time offers across all major retailers.
+                </div>
+                
+                <div class="input-group">
+                    <label for="dealCategory">Deal Category</label>
+                    <select id="dealCategory">
+                        <option value="all">All Deals</option>
+                        <option value="electronics">Electronics Deals</option>
+                        <option value="fashion">Fashion Deals</option>
+                        <option value="home">Home Deals</option>
+                        <option value="clearance">Clearance Items</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="maxPrice">Maximum Price</label>
+                    <input type="number" id="maxPrice" placeholder="Enter max price" min="0">
+                </div>
+                
+                <button class="btn" onclick="findDeals()">⚡ Find Hot Deals</button>
+                
+                <div id="dealResults" class="results" style="display: none;">
+                    <h4>Today's Best Deals</h4>
+                    <div id="dealsList" class="price-comparison"></div>
+                </div>
+            </div>
+
+            <!-- Coupon Finder -->
+            <div class="tool-card" id="coupons">
+                <div class="tool-header">
+                    <div class="tool-icon">🎫</div>
+                    <div class="tool-title">Coupon Finder</div>
+                </div>
+                <div class="tool-description">
+                    Find active coupon codes, promo codes, and discount codes for your favorite stores.
+                </div>
+                
+                <div class="input-group">
+                    <label for="storeSearch">Store or Brand Name</label>
+                    <input type="text" id="storeSearch" placeholder="e.g., Amazon, Nike, Best Buy, Target">
+                </div>
+                
+                <div class="input-group">
+                    <label for="couponType">Coupon Type</label>
+                    <select id="couponType">
+                        <option value="all">All Coupons</option>
+                        <option value="percentage">Percentage Off</option>
+                        <option value="dollar">Dollar Amount Off</option>
+                        <option value="shipping">Free Shipping</option>
+                        <option value="bogo">Buy One Get One</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="findCoupons()">🎟️ Find Coupons</button>
+                
+                <div id="couponResults" class="results" style="display: none;">
+                    <h4>Available Coupon Codes</h4>
+                    <div id="couponsList" class="coupon-results"></div>
+                </div>
+            </div>
+
+            <!-- Stock Checker -->
+            <div class="tool-card" id="stock-checker">
+                <div class="tool-header">
+                    <div class="tool-icon">📦</div>
+                    <div class="tool-title">Stock Checker</div>
+                </div>
+                <div class="tool-description">
+                    Check real-time inventory status for popular items across multiple retailers.
+                </div>
+                
+                <div class="input-group">
+                    <label for="stockProduct">Product to Check</label>
+                    <input type="text" id="stockProduct" placeholder="e.g., PlayStation 5, RTX 4090, iPhone 15">
+                </div>
+                
+                <div class="input-group">
+                    <label for="zipCode">ZIP Code (Optional)</label>
+                    <input type="text" id="zipCode" placeholder="Enter ZIP for local availability">
+                </div>
+                
+                <button class="btn" onclick="checkStock()">📊 Check Stock</button>
+                
+                <div id="stockResults" class="results" style="display: none;">
+                    <h4>Stock Availability</h4>
+                    <div id="stockList" class="price-comparison"></div>
+                </div>
+            </div>
+
+            <!-- Price History -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">📈</div>
+                    <div class="tool-title">Price History</div>
+                </div>
+                <div class="tool-description">
+                    View historical price trends to determine the best time to buy.
+                </div>
+                
+                <div class="input-group">
+                    <label for="historyProduct">Product for History</label>
+                    <input type="text" id="historyProduct" placeholder="Enter product name or URL">
+                </div>
+                
+                <button class="btn" onclick="showPriceHistory()">📊 View Price History</button>
+                
+                <div id="historyResults" class="results" style="display: none;">
+                    <h4>90-Day Price History</h4>
+                    <div class="price-history">
+                        <div id="priceChart" class="price-chart"></div>
+                        <p style="text-align: center; margin-top: 15px; color: #666;">
+                            <strong>Recommendation:</strong> <span id="buyRecommendation">Wait for price drop - current price is 15% above average</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Setup -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">🔔</div>
+                    <div class="tool-title">Price Alerts</div>
+                </div>
+                <div class="tool-description">
+                    Get notified when prices drop below your target price or when items come back in stock.
+                </div>
+                
+                <div class="input-group">
+                    <label for="alertProduct">Product to Track</label>
+                    <input type="text" id="alertProduct" placeholder="Enter product name or URL">
+                </div>
+                
+                <div class="input-group">
+                    <label for="targetPrice">Target Price ($)</label>
+                    <input type="number" id="targetPrice" placeholder="Alert me when price drops below" min="0" step="0.01">
+                </div>
+                
+                <div class="input-group">
+                    <label for="alertEmail">Email Address</label>
+                    <input type="email" id="alertEmail" placeholder="your@email.com">
+                </div>
+                
+                <button class="btn" onclick="setupAlert()">🔔 Create Price Alert</button>
+                <button class="btn btn-secondary" onclick="viewAlerts()">📋 View My Alerts</button>
+                
+                <div id="alertResults" class="results" style="display: none;">
+                    <h4>Alert Created Successfully!</h4>
+                    <p>We'll email you when the price drops below your target. You can manage your alerts anytime.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Space -->
+        <div class="ad-space">
+            <strong>Advertisement Space</strong><br>
+            300x250 Medium Rectangle Ad Unit
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>DealHunter Pro</h3>
+                <p>Your ultimate shopping companion. Save money, find deals, and never miss a discount again.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Popular Tools</h3>
+                <p><a href="#price-tracker">Price Comparison</a></p>
+                <p><a href="#deal-finder">Deal Finder</a></p>
+                <p><a href="#coupons">Coupon Codes</a></p>
+                <p><a href="#stock-checker">Stock Checker</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Retailers</h3>
+                <p>Amazon • Walmart • Target • Best Buy</p>
+                <p>Home Depot • Costco • eBay • Newegg</p>
+                <p>Macy's • Nike • Apple • GameStop</p>
+            </div>
+            <div class="footer-section">
+                <h3>Stay Updated</h3>
+                <p>Join our newsletter for exclusive deals and price drop alerts.</p>
+                <div style="margin-top: 15px;">
+                    <input type="email" placeholder="Enter your email" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-right: 10px;">
+                    <button style="padding: 10px 20px; background: #FF6B35; color: white; border: none; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simulated data for demonstration
+        const sampleStores = [
+            { name: 'Amazon', logo: 'AMZ', basePrice: 299.99, discount: 15 },
+            { name: 'Walmart', logo: 'WMT', basePrice: 289.99, discount: 20 },
+            { name: 'Target', logo: 'TGT', basePrice: 309.99, discount: 10 },
+            { name: 'Best Buy', logo: 'BBY', basePrice: 299.99, discount: 18 },
+            { name: 'Costco', logo: 'CST', basePrice: 279.99, discount: 25 }
+        ];
+
+        const sampleCoupons = [
+            { title: '20% Off Electronics', code: 'TECH20', description: 'Valid on electronics over $100' },
+            { title: 'Free Shipping', code: 'FREESHIP', description: 'Free shipping on orders over $35' },
+            { title: '$50 Off $200+', code: 'SAVE50', description: 'Get $50 off orders over $200' },
+            { title: 'Buy 2 Get 1 Free', code: 'BOGO', description: 'Select items only' }
+        ];
+
+        function searchPrices() {
+            const product = document.getElementById('productSearch').value;
+            const category = document.getElementById('categorySelect').value;
+            
+            if (!product.trim()) {
+                alert('Please enter a product name');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('priceResults');
+            const comparisonDiv = document.getElementById('priceComparison');
+            
+            // Generate simulated price comparison
+            let html = '';
+            sampleStores.forEach(store => {
+                const discountedPrice = store.basePrice * (1 - store.discount / 100);
+                const savings = store.basePrice - discountedPrice;
+                
+                html += `
+                    <div class="store-price">
+                        <div class="store-info">
+                            <div class="store-logo">${store.logo}</div>
+                            <div>
+                                <strong>${store.name}</strong>
+                                <div class="stock-indicator in-stock">In Stock</div>
+                            </div>
+                        </div>
+                        <div class="price-info">
+                            <div class="current-price">$${discountedPrice.toFixed(2)}</div>
+                            <div class="original-price">$${store.basePrice.toFixed(2)}</div>
+                            <div class="savings">Save $${savings.toFixed(2)}</div>
+                        </div>
+                        <a href="https://${store.name.toLowerCase().replace(' ', '')}.com/search?q=${encodeURIComponent(product)}" 
+                           target="_blank" class="visit-store">Visit Store</a>
+                    </div>
+                `;
+            });
+            
+            comparisonDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function findDeals() {
+            const category = document.getElementById('dealCategory').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            
+            const resultsDiv = document.getElementById('dealResults');
+            const dealsDiv = document.getElementById('dealsList');
+            
+            // Generate simulated deals
+            const deals = [
+                { title: 'Wireless Earbuds', store: 'Amazon', originalPrice: 199.99, salePrice: 89.99, discount: 55 },
+                { title: '4K Smart TV 55"', store: 'Best Buy', originalPrice: 799.99, salePrice: 499.99, discount: 38 },
+                { title: 'Gaming Laptop', store: 'Newegg', originalPrice: 1299.99, salePrice: 899.99, discount: 31 },
+                { title: 'Coffee Maker', store: 'Target', originalPrice: 149.99, salePrice: 79.99, discount: 47 }
+            ];
+            
+            let html = '';
+            deals.forEach(deal => {
+                if (!maxPrice || deal.salePrice <= maxPrice) {
+                    html += `
+                        <div class="store-price">
+                            <div class="store-info">
+                                <div class="store-logo">${deal.store.substring(0, 3).toUpperCase()}</div>
+                                <div>
+                                    <strong>${deal.title}</strong>
+                                    <div class="savings">${deal.discount}% OFF - Limited Time!</div>
+                                </div>
+                            </div>
+                            <div class="price-info">
+                                <div class="current-price">$${deal.salePrice.toFixed(2)}</div>
+                                <div class="original-price">$${deal.originalPrice.toFixed(2)}</div>
+                                <div class="savings">Save $${(deal.originalPrice - deal.salePrice).toFixed(2)}</div>
+                            </div>
+                            <a href="#" target="_blank" class="visit-store">Shop Deal</a>
+                        </div>
+                    `;
+                }
+            });
+            
+            dealsDiv.innerHTML = html || '<p>No deals found matching your criteria.</p>';
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function findCoupons() {
+            const store = document.getElementById('storeSearch').value;
+            const type = document.getElementById('couponType').value;
+            
+            if (!store.trim()) {
+                alert('Please enter a store name');
+                return;
+            }
+            
+            const resultsDiv = document.getElementById('couponResults');
+            const couponsDiv = document.getElementById('couponsList');
+            
+            let html = '';
+            sampleCoupons.forEach(coupon => {
+                html += `
+                    <div class="coupon-card">
+                        <div class="coupon-title">${coupon.title}</div>
+                        <div class="coupon-code">${coupon.code}</div>
+                        <div class="coupon-description">${coupon.description}</div>
+                        <button onclick="copyCoupon('${coupon.code}')" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 10px;">Copy Code</button>
+                    </div>
+                `;
+            });
+            
+            couponsDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function checkStock() {
+            const product = document.getElementById('stockProduct').value;
+            const zipCode = document.getElementById('zipCode').value;
+            
+            if (!product.trim()) {
+                alert('Please enter a product name');
+                return;
+            }
+            
+            const resultsDiv = document.getElementById('stockResults');
+            const stockDiv = document.getElementById('stockList');
+            
+            const stockData = [
+                { store: 'Amazon', status: 'in-stock', text: 'In Stock - Ships Tomorrow' },
+                { store: 'Walmart', status: 'low-stock', text: 'Low Stock - 3 Left' },
+                { store: 'Target', status: 'out-of-stock', text: 'Out of Stock' },
+                { store: 'Best Buy', status: 'in-stock', text: 'In Stock - Pick Up Today' }
+            ];
+            
+            let html = '';
+            stockData.forEach(item => {
+                html += `
+                    <div class="store-price">
+                        <div class="store-info">
+                            <div class="store-logo">${item.store.substring(0, 3).toUpperCase()}</div>
+                            <div>
+                                <strong>${item.store}</strong>
+                                <div class="stock-indicator ${item.status}">${item.text}</div>
+                            </div>
+                        </div>
+                        <a href="#" target="_blank" class="visit-store">Check Store</a>
+                    </div>
+                `;
+            });
+            
+            stockDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showPriceHistory() {
+            const product = document.getElementById('historyProduct').value;
+            
+            if (!product.trim()) {
+                alert('Please enter a product name');
+                return;
+            }
+            
+            const resultsDiv = document.getElementById('historyResults');
+            const chartDiv = document.getElementById('priceChart');
+            
+            // Generate simulated price history bars
+            chartDiv.innerHTML = '';
+            const prices = [];
+            let basePrice = 299.99;
+            
+            for (let i = 0; i < 30; i++) {
+                const variance = (Math.random() - 0.5) * 40;
+                const price = Math.max(basePrice + variance, 200);
+                prices.push(price);
+                
+                const height = (price / 400) * 160; // Scale to chart height
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = height + 'px';
+                bar.title = `Day ${i + 1}: $${price.toFixed(2)}`;
+                chartDiv.appendChild(bar);
+            }
+            
+            const currentPrice = prices[prices.length - 1];
+            const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length;
+            const recommendation = currentPrice > avgPrice ? 
+                `Wait for price drop - current price is ${((currentPrice - avgPrice) / avgPrice * 100).toFixed(1)}% above average` :
+                `Good time to buy - current price is ${((avgPrice - currentPrice) / avgPrice * 100).toFixed(1)}% below average`;
+            
+            document.getElementById('buyRecommendation').textContent = recommendation;
+            
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function setupAlert() {
+            const product = document.getElementById('alertProduct').value;
+            const targetPrice = document.getElementById('targetPrice').value;
+            const email = document.getElementById('alertEmail').value;
+            
+            if (!product.trim() || !targetPrice || !email.trim()) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Save alert to localStorage (in real app, send to server)
+            const alerts = JSON.parse(localStorage.getItem('priceAlerts') || '[]');
+            alerts.push({
+                id: Date.now(),
+                product,
+                targetPrice: parseFloat(targetPrice),
+                email,
+                created: new Date().toISOString()
+            });
+            localStorage.setItem('priceAlerts', JSON.stringify(alerts));
+            
+            const resultsDiv = document.getElementById('alertResults');
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Clear form
+            document.getElementById('alertProduct').value = '';
+            document.getElementById('targetPrice').value = '';
+            document.getElementById('alertEmail').value = '';
+        }
+
+        function viewAlerts() {
+            const alerts = JSON.parse(localStorage.getItem('priceAlerts') || '[]');
+            if (alerts.length === 0) {
+                alert('No price alerts found. Create your first alert above!');
+                return;
+            }
+            
+            let alertsList = 'Your Price Alerts:\n\n';
+            alerts.forEach((alert, index) => {
+                alertsList += `${index + 1}. ${alert.product} - Alert at $${alert.targetPrice}\n`;
+            });
+            alert(alertsList);
+        }
+
+        function copyCoupon(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                alert(`Coupon code ${code} copied to clipboard!`);
+            }).catch(() => {
+                alert(`Coupon code: ${code}`);
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add some dynamic elements on page load
+        window.addEventListener('load', () => {
+            // Animate stats counter
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                stat.textContent = '0';
+                
+                setTimeout(() => {
+                    stat.textContent = finalValue;
+                    stat.style.transition = 'all 1s ease';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
