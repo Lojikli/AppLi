@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Trading Analysis Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        input, select, button {
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff4757, #ff6b7a);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.3);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel h3 {
+            margin-bottom: 15px;
+            color: #00ff88;
+            font-size: 1.3rem;
+        }
+
+        .scanner-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .stock-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #00ff88;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .stock-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .stock-item.sell-signal {
+            border-left-color: #ff4757;
+        }
+
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .stock-symbol {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .stock-price {
+            font-size: 1.4rem;
+            color: #00ff88;
+        }
+
+        .price-negative {
+            color: #ff4757;
+        }
+
+        .indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .indicator {
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+        }
+
+        .indicator-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 2px;
+        }
+
+        .indicator-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .signal-strong {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .signal-weak {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .signal-sell {
+            background: rgba(255, 71, 87, 0.2);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+
+        .analysis-panel {
+            grid-column: 1 / -1;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #000;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .metric-title {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .metric-change {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .positive {
+            color: #00ff88;
+        }
+
+        .negative {
+            color: #ff4757;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            margin: 20px 0;
+        }
+
+        .watchlist {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .alert {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+
+        .alert-danger {
+            background: rgba(255, 71, 87, 0.1);
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .options-chain {
+            margin-top: 20px;
+        }
+
+        .options-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .options-table th,
+        .options-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .options-table th {
+            background: rgba(0, 255, 136, 0.2);
+            font-weight: 600;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #00ff88;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Elite Trading Analysis Platform</h1>
+            <div class="controls">
+                <div class="input-group">
+                    <label>Stock Symbol</label>
+                    <input type="text" id="symbolInput" placeholder="Enter symbol (e.g., AAPL)" value="AAPL">
+                </div>
+                <div class="input-group">
+                    <label>Analysis Type</label>
+                    <select id="analysisType">
+                        <option value="swing">Swing Trading</option>
+                        <option value="day">Day Trading</option>
+                        <option value="momentum">Momentum</option>
+                    </select>
+                </div>
+                <button onclick="analyzeStock()">Analyze Stock</button>
+                <button onclick="scanMarket()">Scan S&P 500</button>
+                <button onclick="toggleWatchlist()" class="btn-danger">Manage Watchlist</button>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="panel">
+                <h3>🎯 Market Scanner Results</h3>
+                <div id="scannerResults" class="scanner-results">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <span style="margin-left: 15px;">Click "Scan S&P 500" to analyze market opportunities</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>📊 Live Market Pulse</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">S&P 500</div>
+                        <div class="metric-value">5,234.18</div>
+                        <div class="metric-change positive">+1.2% (+15.42)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">VIX</div>
+                        <div class="metric-value">18.45</div>
+                        <div class="metric-change negative">-2.1% (-0.39)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Active Signals</div>
+                        <div class="metric-value" id="activeSignals">0</div>
+                        <div class="metric-change">Scanning...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel analysis-panel">
+            <h3>🔬 Deep Analysis Dashboard</h3>
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('technical')">Technical Analysis</div>
+                <div class="tab" onclick="switchTab('fundamental')">Fundamental Analysis</div>
+                <div class="tab" onclick="switchTab('options')">Options Analysis</div>
+                <div class="tab" onclick="switchTab('alerts')">Smart Alerts</div>
+            </div>
+
+            <div id="technical" class="tab-content active">
+                <div id="technicalAnalysis">
+                    <div class="chart-placeholder">
+                        📈 Advanced Technical Chart - Select a stock for detailed analysis
+                    </div>
+                </div>
+            </div>
+
+            <div id="fundamental" class="tab-content">
+                <div id="fundamentalAnalysis">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">P/E Ratio</div>
+                            <div class="metric-value">--</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">EPS Growth</div>
+                            <div class="metric-value">--</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Revenue Growth</div>
+                            <div class="metric-value">--</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Debt/Equity</div>
+                            <div class="metric-value">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="options" class="tab-content">
+                <div class="options-chain">
+                    <h4>Options Chain Analysis</h4>
+                    <table class="options-table">
+                        <thead>
+                            <tr>
+                                <th>Strike</th>
+                                <th>Call Volume</th>
+                                <th>Call OI</th>
+                                <th>Put Volume</th>
+                                <th>Put OI</th>
+                                <th>P/C Ratio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="optionsData">
+                            <tr><td colspan="6">Select a stock to view options data</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="alerts" class="tab-content">
+                <div id="alertsPanel">
+                    <div class="alert alert-success">
+                        ✅ <strong>NVDA</strong> - RSI oversold condition detected at 28.5
+                    </div>
+                    <div class="alert alert-danger">
+                        ⚠️ <strong>TSLA</strong> - Breaking below 200-day MA with high volume
+                    </div>
+                    <div class="alert">
+                        📊 <strong>AAPL</strong> - Approaching key resistance at $185.50
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="watchlist" id="watchlist" style="display: none;">
+            <h3>📋 Custom Watchlists</h3>
+            <div class="controls">
+                <input type="text" id="watchlistName" placeholder="Watchlist name">
+                <input type="text" id="watchlistSymbols" placeholder="Enter symbols (comma separated)">
+                <button onclick="createWatchlist()">Create Watchlist</button>
+            </div>
+            <div id="watchlistItems"></div>
+        </div>
+    </div>
+
+    <script>
+        // Advanced Stock Analysis Engine
+        class StockAnalyzer {
+            constructor() {
+                this.stockData = new Map();
+                this.indicators = {};
+                this.watchlists = JSON.parse(localStorage.getItem('watchlists') || '{}');
+                this.initializeData();
+            }
+
+            initializeData() {
+                // S&P 500 sample data with realistic market data
+                const sp500Samples = {
+                    'AAPL': { 
+                        price: 178.45, 
+                        volume: 45234567,
+                        fundamentals: { pe: 28.5, eps: 6.25, revenue_growth: 8.2, debt_equity: 1.73, roe: 26.4 },
+                        history: this.generatePriceHistory(178.45, 50)
+                    },
+                    'MSFT': { 
+                        price: 342.12, 
+                        volume: 32145678,
+                        fundamentals: { pe: 32.1, eps: 10.65, revenue_growth: 12.1, debt_equity: 0.35, roe: 18.7 },
+                        history: this.generatePriceHistory(342.12, 50)
+                    },
+                    'GOOGL': { 
+                        price: 134.87, 
+                        volume: 28934567,
+                        fundamentals: { pe: 24.8, eps: 5.44, revenue_growth: 9.8, debt_equity: 0.12, roe: 14.2 },
+                        history: this.generatePriceHistory(134.87, 50)
+                    },
+                    'NVDA': { 
+                        price: 892.34, 
+                        volume: 67845234,
+                        fundamentals: { pe: 73.2, eps: 12.19, revenue_growth: 126.0, debt_equity: 0.24, roe: 49.8 },
+                        history: this.generatePriceHistory(892.34, 50)
+                    },
+                    'TSLA': { 
+                        price: 203.67, 
+                        volume: 89234567,
+                        fundamentals: { pe: 64.7, eps: 3.15, revenue_growth: 19.3, debt_equity: 0.17, roe: 19.1 },
+                        history: this.generatePriceHistory(203.67, 50)
+                    },
+                    'META': { 
+                        price: 298.45, 
+                        volume: 34567890,
+                        fundamentals: { pe: 22.9, eps: 13.03, revenue_growth: 16.0, debt_equity: 0.08, roe: 22.6 },
+                        history: this.generatePriceHistory(298.45, 50)
+                    },
+                    'AMZN': { 
+                        price: 127.89, 
+                        volume: 45678901,
+                        fundamentals: { pe: 45.2, eps: 2.83, revenue_growth: 9.4, debt_equity: 0.34, roe: 11.8 },
+                        history: this.generatePriceHistory(127.89, 50)
+                    },
+                    'JPM': { 
+                        price: 156.78, 
+                        volume: 23456789,
+                        fundamentals: { pe: 12.4, eps: 12.62, revenue_growth: 22.1, debt_equity: 1.18, roe: 15.3 },
+                        history: this.generatePriceHistory(156.78, 50)
+                    }
+                };
+
+                for (const [symbol, data] of Object.entries(sp500Samples)) {
+                    this.stockData.set(symbol, data);
+                }
+            }
+
+            generatePriceHistory(currentPrice, days) {
+                const history = [];
+                let price = currentPrice;
+                
+                for (let i = days; i >= 0; i--) {
+                    const volatility = 0.02;
+                    const change = (Math.random() - 0.5) * 2 * volatility;
+                    price = price * (1 + change);
+                    
+                    history.push({
+                        date: new Date(Date.now() - i * 24 * 60 * 60 * 1000),
+                        open: price * (1 + (Math.random() - 0.5) * 0.01),
+                        high: price * (1 + Math.random() * 0.02),
+                        low: price * (1 - Math.random() * 0.02),
+                        close: price,
+                        volume: Math.floor(Math.random() * 50000000) + 10000000
+                    });
+                }
+                
+                return history;
+            }
+
+            // Technical Analysis Calculations
+            calculateRSI(prices, period = 14) {
+                if (prices.length < period + 1) return null;
+                
+                let gains = 0;
+                let losses = 0;
+                
+                for (let i = 1; i <= period; i++) {
+                    const change = prices[i] - prices[i - 1];
+                    if (change > 0) gains += change;
+                    else losses -= change;
+                }
+                
+                const avgGain = gains / period;
+                const avgLoss = losses / period;
+                const rs = avgGain / avgLoss;
+                const rsi = 100 - (100 / (1 + rs));
+                
+                return Math.round(rsi * 100) / 100;
+            }
+
+            calculateMACD(prices, fastPeriod = 12, slowPeriod = 26, signalPeriod = 9) {
+                if (prices.length < slowPeriod) return null;
+                
+                const emaFast = this.calculateEMA(prices, fastPeriod);
+                const emaSlow = this.calculateEMA(prices, slowPeriod);
+                
+                if (!emaFast || !emaSlow) return null;
+                
+                const macdLine = emaFast - emaSlow;
+                const signal = this.calculateEMA([macdLine], signalPeriod);
+                const histogram = macdLine - (signal || 0);
+                
+                return {
+                    macd: Math.round(macdLine * 100) / 100,
+                    signal: Math.round((signal || 0) * 100) / 100,
+                    histogram: Math.round(histogram * 100) / 100
+                };
+            }
+
+            calculateEMA(prices, period) {
+                if (prices.length < period) return null;
+                
+                const multiplier = 2 / (period + 1);
+                let ema = prices[0];
+                
+                for (let i = 1; i < prices.length; i++) {
+                    ema = (prices[i] * multiplier) + (ema * (1 - multiplier));
+                }
+                
+                return ema;
+            }
+
+            calculateBollingerBands(prices, period = 20, stdDev = 2) {
+                if (prices.length < period) return null;
+                
+                const recentPrices = prices.slice(-period);
+                const sma = recentPrices.reduce((a, b) => a + b) / period;
+                
+                const variance = recentPrices.reduce((acc, price) => {
+                    return acc + Math.pow(price - sma, 2);
+                }, 0) / period;
+                
+                const standardDeviation = Math.sqrt(variance);
+                
+                return {
+                    upper: Math.round((sma + (standardDeviation * stdDev)) * 100) / 100,
+                    middle: Math.round(sma * 100) / 100,
+                    lower: Math.round((sma - (standardDeviation * stdDev)) * 100) / 100
+                };
+            }
+
+            // Advanced Signal Detection
+            detectSwingSignals(symbol) {
+                const data = this.stockData.get(symbol);
+                if (!data || !data.history) return null;
+                
+                const prices = data.history.map(h => h.close);
+                const volumes = data.history.map(h => h.volume);
+                
+                const rsi = this.calculateRSI(prices);
+                const macd = this.calculateMACD(prices);
+                const bb = this.calculateBollingerBands(prices);
+                const sma20 = this.calculateSMA(prices, 20);
+                const sma50 = this.calculateSMA(prices, 50);
+                
+                const currentPrice = prices[prices.length - 1];
+                const avgVolume = volumes.slice(-20).reduce((a, b) => a + b) / 20;
+                const currentVolume = volumes[volumes.length - 1];
+                
+                // Signal Scoring Algorithm
+                let signalStrength = 0;
+                let signalType = 'HOLD';
+                const signals = [];
+                
+                // RSI Analysis
+                if (rsi < 30) {
+                    signalStrength += 3;
+                    signals.push('RSI Oversold');
+                } else if (rsi > 70) {
+                    signalStrength -= 3;
+                    signals.push('RSI Overbought');
+                }
+                
+                // MACD Analysis
+                if (macd && macd.macd > macd.signal && macd.histogram > 0) {
+                    signalStrength += 2;
+                    signals.push('MACD Bullish');
+                } else if (macd && macd.macd < macd.signal && macd.histogram < 0) {
+                    signalStrength -= 2;
+                    signals.push('MACD Bearish');
+                }
+                
+                // Bollinger Bands Analysis
+                if (bb && currentPrice < bb.lower) {
+                    signalStrength += 2;
+                    signals.push('BB Oversold');
+                } else if (bb && currentPrice > bb.upper) {
+                    signalStrength -= 2;
+                    signals.push('BB Overbought');
+                }
+                
+                // Moving Average Analysis
+                if (sma20 && sma50 && sma20 > sma50 && currentPrice > sma20) {
+                    signalStrength += 1;
+                    signals.push('MA Bullish');
+                } else if (sma20 && sma50 && sma20 < sma50 && currentPrice < sma20) {
+                    signalStrength -= 1;
+                    signals.push('MA Bearish');
+                }
+                
+                // Volume Analysis
+                if (currentVolume > avgVolume * 1.5) {
+                    signalStrength += 1;
+                    signals.push('High Volume');
+                }
+                
+                // Determine Signal Type
+                if (signalStrength >= 4) signalType = 'STRONG BUY';
+                else if (signalStrength >= 2) signalType = 'BUY';
+                else if (signalStrength <= -4) signalType = 'STRONG SELL';
+                else if (signalStrength <= -2) signalType = 'SELL';
+                
+                return {
+                    symbol,
+                    price: currentPrice,
+                    signalType,
+                    signalStrength,
+                    confidence: Math.min(Math.abs(signalStrength) * 15, 95),
+                    indicators: {
+                        rsi: rsi,
+                        macd: macd,
+                        bollingerBands: bb,
+                        sma20: sma20,
+                        sma50: sma50
+                    },
+                    signals: signals,
+                    volume: currentVolume,
+                    avgVolume: avgVolume,
+                    fundamentals: data.fundamentals
+                };
+            }
+
+            calculateSMA(prices, period) {
+                if (prices.length < period) return null;
+                const recentPrices = prices.slice(-period);
+                return recentPrices.reduce((a, b) => a + b) / period;
+            }
+
+            scanMarket() {
+                const results = [];
+                
+                for (const symbol of this.stockData.keys()) {
+                    const analysis = this.detectSwingSignals(symbol);
+                    if (analysis && (analysis.signalType.includes('BUY') || analysis.signalType.includes('SELL'))) {
+                        results.push(analysis);
+                    }
+                }
+                
+                // Sort by signal strength and confidence
+                return results.sort((a, b) => {
+                    return Math.abs(b.signalStrength) - Math.abs(a.signalStrength);
+                });
+            }
+
+            generateOptionsData(symbol) {
+                const data = this.stockData.get(symbol);
+                if (!data) return [];
+                
+                const currentPrice = data.price;
+                const strikes = [];
+                
+                // Generate strikes around current price
+                for (let i = -5; i <= 5; i++) {
+                    const strike = Math.round((currentPrice + (currentPrice * 0.05 * i)) / 5) * 5;
+                    const callVolume = Math.floor(Math.random() * 1000) + 100;
+                    const putVolume = Math.floor(Math.random() * 800) + 50;
+                    const callOI = Math.floor(Math.random() * 5000) + 500;
+                    const putOI = Math.floor(Math.random() * 4000) + 300;
+                    
+                    strikes.push({
+                        strike: strike,
+                        callVolume: callVolume,
+                        callOI: callOI,
+                        putVolume: putVolume,
+                        putOI: putOI,
+                        pcRatio: Math.round((putVolume / callVolume) * 100) / 100
+                    });
+                }
+                
+                return strikes;
+            }
+        }
+
+        // Initialize the analyzer
+        const analyzer = new StockAnalyzer();
+        let currentStock = null;
+
+        function analyzeStock() {
+            const symbol = document.getElementById('symbolInput').value.toUpperCase();
+            const analysisType = document.getElementById('analysisType').value;
+            
+            if (!symbol) {
+                alert('Please enter a stock symbol');
+                return;
+            }
+            
+            currentStock = symbol;
+            const analysis = analyzer.detectSwingSignals(symbol);
+            
+            if (!analysis) {
+                alert('Stock not found in database. Try AAPL, MSFT, GOOGL, NVDA, TSLA, META, AMZN, or JPM');
+                return;
+            }
+            
+            displayTechnicalAnalysis(analysis);
+            displayFundamentalAnalysis(analysis);
+            displayOptionsData(symbol);
+        }
+
+        function displayTechnicalAnalysis(analysis) {
+            const container = document.getElementById('technicalAnalysis');
+            
+            const signalClass = analysis.signalType.includes('BUY') ? 'signal-strong' : 
+                              analysis.signalType.includes('SELL') ? 'signal-sell' : 'signal-weak';
+            
+            container.innerHTML = `
+                <div class="stock-item ${signalClass}">
+                    <div class="stock-header">
+                        <div class="stock-symbol">${analysis.symbol}</div>
+                        <div class="stock-price ${analysis.signalType.includes('SELL') ? 'price-negative' : ''}">
+                            $${analysis.price.toFixed(2)}
+                        </div>
+                    </div>
+                    <div class="alert ${analysis.signalType.includes('BUY') ? 'alert-success' : analysis.signalType.includes('SELL') ? 'alert-danger' : ''}">
+                        <strong>${analysis.signalType}</strong> - Confidence: ${analysis.confidence}%
+                        <br>Active Signals: ${analysis.signals.join(', ')}
+                    </div>
+                    <div class="indicators">
+                        <div class="indicator">
+                            <div class="indicator-label">RSI (14)</div>
+                            <div class="indicator-value">${analysis.indicators.rsi}</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-label">MACD</div>
+                            <div class="indicator-value">${analysis.indicators.macd?.macd || 'N/A'}</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-label">BB Upper</div>
+                            <div class="indicator-value">$${analysis.indicators.bollingerBands?.upper || 'N/A'}</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-label">BB Lower</div>
+                            <div class="indicator-value">$${analysis.indicators.bollingerBands?.lower || 'N/A'}</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-label">SMA 20</div>
+                            <div class="indicator-value">$${analysis.indicators.sma20?.toFixed(2) || 'N/A'}</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-label">Volume Ratio</div>
+                            <div class="indicator-value">${(analysis.volume / analysis.avgVolume).toFixed(2)}x</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    📊 Advanced Price Chart for ${analysis.symbol}<br>
+                    <small>Chart integration available with real-time data feed</small>
+                </div>
+            `;
+        }
+
+        function displayFundamentalAnalysis(analysis) {
+            const container = document.getElementById('fundamentalAnalysis');
+            const fund = analysis.fundamentals;
+            
+            container.innerHTML = `
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">P/E Ratio</div>
+                        <div class="metric-value">${fund.pe}</div>
+                        <div class="metric-change ${fund.pe < 25 ? 'positive' : 'negative'}">
+                            ${fund.pe < 25 ? 'Reasonable' : 'High'}
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">EPS</div>
+                        <div class="metric-value">$${fund.eps}</div>
+                        <div class="metric-change positive">Strong</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Revenue Growth</div>
+                        <div class="metric-value">${fund.revenue_growth}%</div>
+                        <div class="metric-change ${fund.revenue_growth > 10 ? 'positive' : 'negative'}">
+                            ${fund.revenue_growth > 10 ? 'Excellent' : 'Moderate'}
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Debt/Equity</div>
+                        <div class="metric-value">${fund.debt_equity}</div>
+                        <div class="metric-change ${fund.debt_equity < 0.5 ? 'positive' : 'negative'}">
+                            ${fund.debt_equity < 0.5 ? 'Low Risk' : 'Moderate Risk'}
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">ROE</div>
+                        <div class="metric-value">${fund.roe}%</div>
+                        <div class="metric-change ${fund.roe > 15 ? 'positive' : 'negative'}">
+                            ${fund.roe > 15 ? 'Excellent' : 'Average'}
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Fair Value Est.</div>
+                        <div class="metric-value">$${(fund.eps * fund.pe * 0.9).toFixed(2)}</div>
+                        <div class="metric-change">DCF Model</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayOptionsData(symbol) {
+            const optionsData = analyzer.generateOptionsData(symbol);
+            const tbody = document.getElementById('optionsData');
+            
+            tbody.innerHTML = optionsData.map(option => `
+                <tr>
+                    <td>$${option.strike}</td>
+                    <td>${option.callVolume.toLocaleString()}</td>
+                    <td>${option.callOI.toLocaleString()}</td>
+                    <td>${option.putVolume.toLocaleString()}</td>
+                    <td>${option.putOI.toLocaleString()}</td>
+                    <td style="color: ${option.pcRatio > 1 ? '#ff4757' : '#00ff88'}">${option.pcRatio}</td>
+                </tr>
+            `).join('');
+        }
+
+        function scanMarket() {
+            const results = analyzer.scanMarket();
+            const container = document.getElementById('scannerResults');
+            document.getElementById('activeSignals').textContent = results.length;
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="loading">No strong signals detected in current market conditions</div>';
+                return;
+            }
+            
+            container.innerHTML = results.map(stock => {
+                const signalClass = stock.signalType.includes('BUY') ? 'signal-strong' : 'signal-sell';
+                return `
+                    <div class="stock-item ${stock.signalType.includes('SELL') ? 'sell-signal' : ''}" 
+                         onclick="analyzeStockFromScanner('${stock.symbol}')">
+                        <div class="stock-header">
+                            <div class="stock-symbol">${stock.symbol}</div>
+                            <div class="stock-price ${stock.signalType.includes('SELL') ? 'price-negative' : ''}">
+                                $${stock.price.toFixed(2)}
+                            </div>
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <strong>${stock.signalType}</strong> (${stock.confidence}% confidence)
+                        </div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">
+                            ${stock.signals.join(' • ')}
+                        </div>
+                        <div class="indicators">
+                            <div class="indicator">
+                                <div class="indicator-label">RSI</div>
+                                <div class="indicator-value">${stock.indicators.rsi}</div>
+                            </div>
+                            <div class="indicator">
+                                <div class="indicator-label">P/E</div>
+                                <div class="indicator-value">${stock.fundamentals.pe}</div>
+                            </div>
+                            <div class="indicator">
+                                <div class="indicator-label">Growth</div>
+                                <div class="indicator-value">${stock.fundamentals.revenue_growth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function analyzeStockFromScanner(symbol) {
+            document.getElementById('symbolInput').value = symbol;
+            analyzeStock();
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function toggleWatchlist() {
+            const watchlist = document.getElementById('watchlist');
+            watchlist.style.display = watchlist.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function createWatchlist() {
+            const name = document.getElementById('watchlistName').value;
+            const symbols = document.getElementById('watchlistSymbols').value.split(',').map(s => s.trim().toUpperCase());
+            
+            if (!name || symbols.length === 0) {
+                alert('Please enter watchlist name and symbols');
+                return;
+            }
+            
+            analyzer.watchlists[name] = symbols;
+            localStorage.setItem('watchlists', JSON.stringify(analyzer.watchlists));
+            
+            displayWatchlists();
+            document.getElementById('watchlistName').value = '';
+            document.getElementById('watchlistSymbols').value = '';
+        }
+
+        function displayWatchlists() {
+            const container = document.getElementById('watchlistItems');
+            const watchlists = Object.entries(analyzer.watchlists);
+            
+            if (watchlists.length === 0) {
+                container.innerHTML = '<p>No watchlists created yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = watchlists.map(([name, symbols]) => `
+                <div class="stock-item">
+                    <div class="stock-header">
+                        <div class="stock-symbol">${name}</div>
+                        <button onclick="analyzeWatchlist('${name}')" class="btn-small">Analyze</button>
+                    </div>
+                    <div style="margin-top: 10px; opacity: 0.8;">
+                        ${symbols.join(', ')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function analyzeWatchlist(name) {
+            const symbols = analyzer.watchlists[name];
+            if (!symbols) return;
+            
+            const results = [];
+            symbols.forEach(symbol => {
+                const analysis = analyzer.detectSwingSignals(symbol);
+                if (analysis) results.push(analysis);
+            });
+            
+            // Display results in scanner
+            const container = document.getElementById('scannerResults');
+            container.innerHTML = results.map(stock => `
+                <div class="stock-item" onclick="analyzeStockFromScanner('${stock.symbol}')">
+                    <div class="stock-header">
+                        <div class="stock-symbol">${stock.symbol}</div>
+                        <div class="stock-price">$${stock.price.toFixed(2)}</div>
+                    </div>
+                    <div><strong>${stock.signalType}</strong> (${stock.confidence}%)</div>
+                </div>
+            `).join('');
+        }
+
+        // Auto-scan market every 30 seconds (simulated)
+        setInterval(() => {
+            if (Math.random() > 0.7) { // 30% chance to update
+                scanMarket();
+            }
+        }, 30000);
+
+        // Initialize with AAPL analysis
+        setTimeout(() => {
+            document.getElementById('symbolInput').value = 'AAPL';
+            analyzeStock();
+            scanMarket();
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -40,12 +40,12 @@ if "!html_files!"=="" (
 )
 
 echo.
-echo Updating index.html with discovered applications...
+echo Updating index.html with discovered services...
 
-REM Generate new apps grid content
-call :generate_apps_grid
+REM Generate new professional landing page
+call :generate_landing_page
 
-echo Index.html has been updated with all applications.
+echo Index.html has been updated with all services.
 echo.
 
 :skip_index_update
@@ -64,7 +64,7 @@ git status --short
 
 echo.
 set /p commit_msg="Enter commit message (or press Enter for default): "
-if "%commit_msg%"=="" set commit_msg=Updated AppLi applications and index page
+if "%commit_msg%"=="" set commit_msg=Updated AppLi business services and landing page
 
 echo.
 echo Committing changes with message: "%commit_msg%"
@@ -99,19 +99,18 @@ echo Repository URL: https://github.com/Lojikli/AppLi
 echo GitHub Pages: https://lojikli.github.io/AppLi
 echo.
 
-REM Optional: Open GitHub repository in browser
-set /p open_github="Open GitHub Pages site in browser? (y/n): "
+REM Optional: Open GitHub Pages site
+set /p open_github="Open your business website in browser? (y/n): "
 if /i "%open_github%"=="y" start https://lojikli.github.io/AppLi
 
 echo.
 pause
 goto :eof
 
-REM Function to generate apps grid
-:generate_apps_grid
+REM Function to generate complete professional landing page
+:generate_landing_page
 
-REM Create temporary file with new content
-echo Creating updated apps grid...
+echo Creating professional business landing page...
 
 (
 echo ^<!DOCTYPE html^>
@@ -119,7 +118,8 @@ echo ^<html lang="en"^>
 echo ^<head^>
 echo     ^<meta charset="UTF-8"^>
 echo     ^<meta name="viewport" content="width=device-width, initial-scale=1.0"^>
-echo     ^<title^>AppLi - Professional Business Solutions^</title^>
+echo     ^<title^>AppLi - Business Solutions That Drive Results^</title^>
+echo     ^<meta name="description" content="Professional business tools for invoicing, financial planning, SEO, social media management, and more. Streamline your operations today."^>
 echo     ^<style^>
 echo         * {
 echo             margin: 0;
@@ -131,7 +131,7 @@ echo         body {
 echo             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 echo             line-height: 1.6;
 echo             color: #333;
-echo             background: linear-gradient^(135deg, #667eea 0%%, #764ba2 100%%^);
+echo             background: linear-gradient^(135deg, #1e3c72 0%%, #2a5298 100%%^);
 echo             min-height: 100vh;
 echo         }
 echo.
@@ -142,13 +142,14 @@ echo             padding: 0 20px;
 echo         }
 echo.
 echo         header {
-echo             background: rgba^(255, 255, 255, 0.1^);
+echo             background: rgba^(255, 255, 255, 0.95^);
 echo             backdrop-filter: blur^(10px^);
 echo             border-bottom: 1px solid rgba^(255, 255, 255, 0.2^);
 echo             padding: 1rem 0;
 echo             position: sticky;
 echo             top: 0;
 echo             z-index: 100;
+echo             box-shadow: 0 2px 20px rgba^(0,0,0,0.1^);
 echo         }
 echo.
 echo         .header-content {
@@ -158,10 +159,12 @@ echo             align-items: center;
 echo         }
 echo.
 echo         .logo {
-echo             font-size: 2rem;
+echo             font-size: 2.2rem;
 echo             font-weight: bold;
-echo             color: white;
-echo             text-shadow: 2px 2px 4px rgba^(0,0,0,0.3^);
+echo             background: linear-gradient^(45deg, #1e3c72, #2a5298^);
+echo             -webkit-background-clip: text;
+echo             -webkit-text-fill-color: transparent;
+echo             background-clip: text;
 echo         }
 echo.
 echo         .nav {
@@ -170,68 +173,130 @@ echo             gap: 2rem;
 echo         }
 echo.
 echo         .nav a {
-echo             color: white;
+echo             color: #333;
 echo             text-decoration: none;
 echo             font-weight: 500;
 echo             transition: color 0.3s ease;
+echo             position: relative;
 echo         }
 echo.
 echo         .nav a:hover {
-echo             color: #ffd700;
+echo             color: #1e3c72;
+echo         }
+echo.
+echo         .nav a::after {
+echo             content: '';
+echo             position: absolute;
+echo             width: 0;
+echo             height: 2px;
+echo             bottom: -5px;
+echo             left: 0;
+echo             background: #1e3c72;
+echo             transition: width 0.3s ease;
+echo         }
+echo.
+echo         .nav a:hover::after {
+echo             width: 100%%;
 echo         }
 echo.
 echo         .hero {
 echo             text-align: center;
-echo             padding: 4rem 0;
+echo             padding: 5rem 0;
 echo             color: white;
+echo             background: linear-gradient^(135deg, rgba^(30,60,114,0.9^), rgba^(42,82,152,0.9^)^);
 echo         }
 echo.
 echo         .hero h1 {
-echo             font-size: 3.5rem;
-echo             margin-bottom: 1rem;
-echo             text-shadow: 2px 2px 4px rgba^(0,0,0,0.5^);
+echo             font-size: 4rem;
+echo             margin-bottom: 1.5rem;
+echo             text-shadow: 2px 2px 4px rgba^(0,0,0,0.3^);
 echo             animation: fadeInUp 1s ease-out;
 echo         }
 echo.
-echo         .hero p {
-echo             font-size: 1.3rem;
-echo             margin-bottom: 2rem;
-echo             opacity: 0.9;
+echo         .hero .subtitle {
+echo             font-size: 1.4rem;
+echo             margin-bottom: 1rem;
+echo             opacity: 0.95;
 echo             animation: fadeInUp 1s ease-out 0.2s both;
 echo         }
 echo.
-echo         .cta-button {
+echo         .hero .description {
+echo             font-size: 1.1rem;
+echo             margin-bottom: 3rem;
+echo             opacity: 0.9;
+echo             max-width: 600px;
+echo             margin-left: auto;
+echo             margin-right: auto;
+echo             animation: fadeInUp 1s ease-out 0.3s both;
+echo         }
+echo.
+echo         .cta-buttons {
+echo             display: flex;
+echo             gap: 1rem;
+echo             justify-content: center;
+echo             flex-wrap: wrap;
+echo             animation: fadeInUp 1s ease-out 0.5s both;
+echo         }
+echo.
+echo         .cta-primary {
 echo             display: inline-block;
-echo             padding: 15px 30px;
-echo             background: linear-gradient^(45deg, #ffd700, #ffed4a^);
-echo             color: #333;
+echo             padding: 18px 35px;
+echo             background: linear-gradient^(45deg, #ff6b35, #f7931e^);
+echo             color: white;
 echo             text-decoration: none;
 echo             border-radius: 50px;
 echo             font-weight: bold;
 echo             font-size: 1.1rem;
-echo             transition: transform 0.3s ease, box-shadow 0.3s ease;
-echo             animation: fadeInUp 1s ease-out 0.4s both;
+echo             transition: all 0.3s ease;
+echo             box-shadow: 0 5px 15px rgba^(255,107,53,0.3^);
 echo         }
 echo.
-echo         .cta-button:hover {
+echo         .cta-primary:hover {
 echo             transform: translateY^(-3px^);
-echo             box-shadow: 0 10px 25px rgba^(0,0,0,0.2^);
+echo             box-shadow: 0 10px 25px rgba^(255,107,53,0.4^);
 echo         }
 echo.
-echo         .apps-section {
-echo             padding: 4rem 0;
-echo             background: rgba^(255, 255, 255, 0.95^);
-echo             margin: 2rem 0;
-echo             border-radius: 20px;
-echo             backdrop-filter: blur^(10px^);
+echo         .cta-secondary {
+echo             display: inline-block;
+echo             padding: 18px 35px;
+echo             background: transparent;
+echo             color: white;
+echo             text-decoration: none;
+echo             border: 2px solid white;
+echo             border-radius: 50px;
+echo             font-weight: bold;
+echo             font-size: 1.1rem;
+echo             transition: all 0.3s ease;
+echo         }
+echo.
+echo         .cta-secondary:hover {
+echo             background: white;
+echo             color: #1e3c72;
+echo             transform: translateY^(-3px^);
+echo         }
+echo.
+echo         .services-section {
+echo             padding: 5rem 0;
+echo             background: white;
+echo         }
+echo.
+echo         .section-header {
+echo             text-align: center;
+echo             margin-bottom: 4rem;
 echo         }
 echo.
 echo         .section-title {
-echo             text-align: center;
-echo             font-size: 2.5rem;
-echo             margin-bottom: 3rem;
+echo             font-size: 2.8rem;
+echo             margin-bottom: 1rem;
 echo             color: #333;
 echo             position: relative;
+echo         }
+echo.
+echo         .section-subtitle {
+echo             font-size: 1.2rem;
+echo             color: #666;
+echo             max-width: 600px;
+echo             margin: 0 auto;
 echo         }
 echo.
 echo         .section-title::after {
@@ -239,139 +304,198 @@ echo             content: '';
 echo             display: block;
 echo             width: 80px;
 echo             height: 4px;
-echo             background: linear-gradient^(45deg, #667eea, #764ba2^);
-echo             margin: 1rem auto;
+echo             background: linear-gradient^(45deg, #ff6b35, #f7931e^);
+echo             margin: 1.5rem auto;
 echo             border-radius: 2px;
 echo         }
 echo.
-echo         .apps-grid {
+echo         .services-grid {
 echo             display: grid;
-echo             grid-template-columns: repeat^(auto-fit, minmax^(350px, 1fr^)^);
-echo             gap: 2rem;
-echo             margin-top: 2rem;
+echo             grid-template-columns: repeat^(auto-fit, minmax^(380px, 1fr^)^);
+echo             gap: 2.5rem;
+echo             margin-top: 3rem;
 echo         }
 echo.
-echo         .app-card {
+echo         .service-card {
 echo             background: white;
-echo             padding: 2rem;
-echo             border-radius: 15px;
-echo             box-shadow: 0 10px 30px rgba^(0,0,0,0.1^);
-echo             transition: transform 0.3s ease, box-shadow 0.3s ease;
+echo             padding: 2.5rem;
+echo             border-radius: 20px;
+echo             box-shadow: 0 15px 40px rgba^(0,0,0,0.08^);
+echo             transition: all 0.3s ease;
 echo             position: relative;
 echo             overflow: hidden;
+echo             border: 1px solid #f0f0f0;
 echo         }
 echo.
-echo         .app-card::before {
+echo         .service-card::before {
 echo             content: '';
 echo             position: absolute;
 echo             top: 0;
 echo             left: 0;
 echo             right: 0;
-echo             height: 4px;
-echo             background: linear-gradient^(45deg, #667eea, #764ba2^);
+echo             height: 5px;
+echo             background: linear-gradient^(45deg, #1e3c72, #2a5298^);
 echo         }
 echo.
-echo         .app-card:hover {
+echo         .service-card:hover {
 echo             transform: translateY^(-10px^);
-echo             box-shadow: 0 20px 40px rgba^(0,0,0,0.15^);
+echo             box-shadow: 0 25px 50px rgba^(0,0,0,0.15^);
 echo         }
 echo.
-echo         .app-icon {
-echo             width: 60px;
-echo             height: 60px;
-echo             background: linear-gradient^(45deg, #667eea, #764ba2^);
-echo             border-radius: 15px;
+echo         .service-icon {
+echo             width: 70px;
+echo             height: 70px;
+echo             background: linear-gradient^(45deg, #1e3c72, #2a5298^);
+echo             border-radius: 20px;
 echo             display: flex;
 echo             align-items: center;
 echo             justify-content: center;
-echo             margin-bottom: 1rem;
-echo             font-size: 1.5rem;
+echo             margin-bottom: 1.5rem;
+echo             font-size: 1.8rem;
 echo             color: white;
+echo             box-shadow: 0 5px 15px rgba^(30,60,114,0.3^);
 echo         }
 echo.
-echo         .app-card h3 {
-echo             font-size: 1.4rem;
+echo         .service-card h3 {
+echo             font-size: 1.5rem;
+echo             margin-bottom: 1rem;
+echo             color: #333;
+echo             font-weight: 600;
+echo         }
+echo.
+echo         .service-card .benefits {
+echo             color: #666;
+echo             margin-bottom: 1.5rem;
+echo             line-height: 1.7;
+echo         }
+echo.
+echo         .service-features {
+echo             list-style: none;
+echo             margin-bottom: 2rem;
+echo         }
+echo.
+echo         .service-features li {
+echo             padding: 0.3rem 0;
+echo             color: #555;
+echo             position: relative;
+echo             padding-left: 1.5rem;
+echo         }
+echo.
+echo         .service-features li::before {
+echo             content: '✓';
+echo             position: absolute;
+echo             left: 0;
+echo             color: #28a745;
+echo             font-weight: bold;
+echo         }
+echo.
+echo         .service-link {
+echo             display: inline-block;
+echo             padding: 12px 28px;
+echo             background: linear-gradient^(45deg, #1e3c72, #2a5298^);
+echo             color: white;
+echo             text-decoration: none;
+echo             border-radius: 30px;
+echo             font-weight: 600;
+echo             transition: all 0.3s ease;
+echo             width: 100%%;
+echo             text-align: center;
+echo             font-size: 1rem;
+echo         }
+echo.
+echo         .service-link:hover {
+echo             transform: translateY^(-2px^);
+echo             box-shadow: 0 8px 20px rgba^(30,60,114,0.3^);
+echo         }
+echo.
+echo         .value-section {
+echo             padding: 5rem 0;
+echo             background: linear-gradient^(135deg, #f8f9fa, #e9ecef^);
+echo         }
+echo.
+echo         .value-grid {
+echo             display: grid;
+echo             grid-template-columns: repeat^(auto-fit, minmax^(280px, 1fr^)^);
+echo             gap: 2.5rem;
+echo             margin-top: 3rem;
+echo         }
+echo.
+echo         .value-item {
+echo             text-align: center;
+echo             padding: 2rem;
+echo             background: white;
+echo             border-radius: 15px;
+echo             box-shadow: 0 10px 30px rgba^(0,0,0,0.08^);
+echo             transition: transform 0.3s ease;
+echo         }
+echo.
+echo         .value-item:hover {
+echo             transform: translateY^(-5px^);
+echo         }
+echo.
+echo         .value-icon {
+echo             font-size: 3rem;
+echo             margin-bottom: 1.5rem;
+echo             display: block;
+echo         }
+echo.
+echo         .value-item h3 {
+echo             font-size: 1.3rem;
 echo             margin-bottom: 1rem;
 echo             color: #333;
 echo         }
 echo.
-echo         .app-card p {
+echo         .value-item p {
 echo             color: #666;
-echo             margin-bottom: 1.5rem;
 echo             line-height: 1.6;
 echo         }
 echo.
-echo         .app-links {
-echo             display: flex;
-echo             gap: 10px;
-echo             flex-wrap: wrap;
-echo         }
-echo.
-echo         .app-link {
-echo             display: inline-block;
-echo             padding: 10px 25px;
-echo             background: linear-gradient^(45deg, #667eea, #764ba2^);
-echo             color: white;
-echo             text-decoration: none;
-echo             border-radius: 25px;
-echo             font-weight: 500;
-echo             transition: transform 0.3s ease, box-shadow 0.3s ease;
-echo         }
-echo.
-echo         .app-link:hover {
-echo             transform: translateY^(-2px^);
-echo             box-shadow: 0 5px 15px rgba^(102, 126, 234, 0.3^);
-echo         }
-echo.
-echo         .github-link {
-echo             display: inline-block;
-echo             padding: 10px 25px;
-echo             background: linear-gradient^(45deg, #333, #555^);
-echo             color: white;
-echo             text-decoration: none;
-echo             border-radius: 25px;
-echo             font-weight: 500;
-echo             transition: transform 0.3s ease, box-shadow 0.3s ease;
-echo             font-size: 0.9rem;
-echo         }
-echo.
-echo         .github-link:hover {
-echo             transform: translateY^(-2px^);
-echo             box-shadow: 0 5px 15px rgba^(0, 0, 0, 0.3^);
-echo             background: linear-gradient^(45deg, #555, #777^);
-echo         }
-echo.
-echo         .features {
+echo         .contact-section {
 echo             padding: 4rem 0;
-echo             text-align: center;
+echo             background: linear-gradient^(135deg, #1e3c72, #2a5298^);
 echo             color: white;
+echo             text-align: center;
 echo         }
 echo.
-echo         .features-grid {
-echo             display: grid;
-echo             grid-template-columns: repeat^(auto-fit, minmax^(250px, 1fr^)^);
-echo             gap: 2rem;
-echo             margin-top: 2rem;
+echo         .contact-content {
+echo             max-width: 600px;
+echo             margin: 0 auto;
 echo         }
 echo.
-echo         .feature {
-echo             padding: 2rem;
-echo             background: rgba^(255, 255, 255, 0.1^);
-echo             border-radius: 15px;
-echo             backdrop-filter: blur^(10px^);
-echo         }
-echo.
-echo         .feature-icon {
+echo         .contact-section h2 {
 echo             font-size: 2.5rem;
 echo             margin-bottom: 1rem;
 echo         }
 echo.
+echo         .contact-section p {
+echo             font-size: 1.2rem;
+echo             margin-bottom: 2rem;
+echo             opacity: 0.9;
+echo         }
+echo.
+echo         .contact-info {
+echo             display: flex;
+echo             justify-content: center;
+echo             gap: 3rem;
+echo             flex-wrap: wrap;
+echo             margin-top: 2rem;
+echo         }
+echo.
+echo         .contact-item {
+echo             text-align: center;
+echo         }
+echo.
+echo         .contact-item .icon {
+echo             font-size: 2rem;
+echo             margin-bottom: 0.5rem;
+echo             display: block;
+echo         }
+echo.
 echo         footer {
-echo             background: rgba^(0, 0, 0, 0.8^);
-echo             color: white;
+echo             background: #1a1a1a;
+echo             color: #ccc;
 echo             text-align: center;
 echo             padding: 2rem 0;
-echo             margin-top: 2rem;
 echo         }
 echo.
 echo         @keyframes fadeInUp {
@@ -387,19 +511,29 @@ echo         }
 echo.
 echo         @media ^(max-width: 768px^) {
 echo             .hero h1 {
-echo                 font-size: 2.5rem;
+echo                 font-size: 2.8rem;
 echo             }
 echo             
-echo             .hero p {
-echo                 font-size: 1.1rem;
+echo             .hero .subtitle {
+echo                 font-size: 1.2rem;
 echo             }
 echo             
-echo             .apps-grid {
+echo             .services-grid {
 echo                 grid-template-columns: 1fr;
 echo             }
 echo             
 echo             .nav {
 echo                 display: none;
+echo             }
+echo.
+echo             .cta-buttons {
+echo                 flex-direction: column;
+echo                 align-items: center;
+echo             }
+echo.
+echo             .contact-info {
+echo                 flex-direction: column;
+echo                 gap: 1.5rem;
 echo             }
 echo         }
 echo     ^</style^>
@@ -410,8 +544,8 @@ echo         ^<div class="container"^>
 echo             ^<div class="header-content"^>
 echo                 ^<div class="logo"^>AppLi^</div^>
 echo                 ^<nav class="nav"^>
-echo                     ^<a href="#apps"^>Applications^</a^>
-echo                     ^<a href="#features"^>Features^</a^>
+echo                     ^<a href="#services"^>Services^</a^>
+echo                     ^<a href="#benefits"^>Benefits^</a^>
 echo                     ^<a href="#contact"^>Contact^</a^>
 echo                 ^</nav^>
 echo             ^</div^>
@@ -420,63 +554,112 @@ echo     ^</header^>
 echo.
 echo     ^<section class="hero"^>
 echo         ^<div class="container"^>
-echo             ^<h1^>Professional Business Solutions^</h1^>
-echo             ^<p^>Streamline your workflow with our comprehensive suite of business applications^</p^>
-echo             ^<a href="#apps" class="cta-button"^>Explore Applications^</a^>
+echo             ^<h1^>Business Solutions That Drive Results^</h1^>
+echo             ^<p class="subtitle"^>Professional tools designed to streamline operations and boost productivity^</p^>
+echo             ^<p class="description"^>From invoice generation to financial planning, SEO optimization to social media management - we provide the comprehensive business tools you need to succeed.^</p^>
+echo             ^<div class="cta-buttons"^>
+echo                 ^<a href="#services" class="cta-primary"^>Explore Our Services^</a^>
+echo                 ^<a href="#contact" class="cta-secondary"^>Get Started Today^</a^>
+echo             ^</div^>
 echo         ^</div^>
 echo     ^</section^>
 echo.
-echo     ^<div class="container"^>
-echo         ^<section id="apps" class="apps-section"^>
-echo             ^<h2 class="section-title"^>Business Applications^</h2^>
-echo             ^<div class="apps-grid"^>
+echo     ^<section id="services" class="services-section"^>
+echo         ^<div class="container"^>
+echo             ^<div class="section-header"^>
+echo                 ^<h2 class="section-title"^>Professional Business Services^</h2^>
+echo                 ^<p class="section-subtitle"^>Choose from our comprehensive suite of business tools designed to save time and increase efficiency^</p^>
+echo             ^</div^>
+echo             ^<div class="services-grid"^>
 ) > temp_index.html
 
-REM Add app cards for each HTML file
+REM Add service cards for each HTML file
 for %%f in (*.html) do (
     if /i not "%%f"=="index.html" (
-        call :add_app_card "%%f"
+        call :add_service_card "%%f"
     )
 )
 
-REM Add the rest of the HTML
+REM Add the rest of the HTML structure
 (
 echo             ^</div^>
-echo         ^</section^>
-echo     ^</div^>
+echo         ^</div^>
+echo     ^</section^>
 echo.
-echo     ^<section id="features" class="features"^>
+echo     ^<section id="benefits" class="value-section"^>
 echo         ^<div class="container"^>
-echo             ^<h2 class="section-title" style="color: white;"^>Why Choose AppLi?^</h2^>
-echo             ^<div class="features-grid"^>
-echo                 ^<div class="feature"^>
-echo                     ^<div class="feature-icon"^>⚡^</div^>
-echo                     ^<h3^>Fast ^& Efficient^</h3^>
-echo                     ^<p^>Optimized applications that work seamlessly across all devices^</p^>
+echo             ^<div class="section-header"^>
+echo                 ^<h2 class="section-title"^>Why Choose AppLi?^</h2^>
+echo                 ^<p class="section-subtitle"^>Professional-grade solutions designed for modern businesses^</p^>
+echo             ^</div^>
+echo             ^<div class="value-grid"^>
+echo                 ^<div class="value-item"^>
+echo                     ^<span class="value-icon"^>⚡^</span^>
+echo                     ^<h3^>Instant Results^</h3^>
+echo                     ^<p^>Start using our tools immediately - no downloads, installations, or complex setup required.^</p^>
 echo                 ^</div^>
-echo                 ^<div class="feature"^>
-echo                     ^<div class="feature-icon"^>🔒^</div^>
+echo                 ^<div class="value-item"^>
+echo                     ^<span class="value-icon"^>💼^</span^>
+echo                     ^<h3^>Professional Quality^</h3^>
+echo                     ^<p^>Enterprise-grade tools designed by business professionals for business professionals.^</p^>
+echo                 ^</div^>
+echo                 ^<div class="value-item"^>
+echo                     ^<span class="value-icon"^>💰^</span^>
+echo                     ^<h3^>Cost Effective^</h3^>
+echo                     ^<p^>Get powerful business tools without the high costs of enterprise software subscriptions.^</p^>
+echo                 ^</div^>
+echo                 ^<div class="value-item"^>
+echo                     ^<span class="value-icon"^>🔒^</span^>
 echo                     ^<h3^>Secure ^& Private^</h3^>
-echo                     ^<p^>Your data stays on your device with no external dependencies^</p^>
+echo                     ^<p^>Your business data stays private and secure with client-side processing and no data storage.^</p^>
 echo                 ^</div^>
-echo                 ^<div class="feature"^>
-echo                     ^<div class="feature-icon"^>🎯^</div^>
-echo                     ^<h3^>Professional Grade^</h3^>
-echo                     ^<p^>Enterprise-quality tools designed for business professionals^</p^>
+echo                 ^<div class="value-item"^>
+echo                     ^<span class="value-icon"^>📱^</span^>
+echo                     ^<h3^>Works Everywhere^</h3^>
+echo                     ^<p^>Access your tools from any device - desktop, tablet, or mobile - with responsive design.^</p^>
 echo                 ^</div^>
-echo                 ^<div class="feature"^>
-echo                     ^<div class="feature-icon"^>🔄^</div^>
-echo                     ^<h3^>Always Updated^</h3^>
-echo                     ^<p^>Regular updates with new features and improvements^</p^>
+echo                 ^<div class="value-item"^>
+echo                     ^<span class="value-icon"^>🎯^</span^>
+echo                     ^<h3^>Results Focused^</h3^>
+echo                     ^<p^>Every tool is designed to deliver measurable improvements to your business operations.^</p^>
 echo                 ^</div^>
 echo             ^</div^>
 echo         ^</div^>
 echo     ^</section^>
 echo.
-echo     ^<footer id="contact"^>
+echo     ^<section id="contact" class="contact-section"^>
 echo         ^<div class="container"^>
-echo             ^<p^>^&copy; 2025 AppLi - Professional Business Solutions. All rights reserved.^</p^>
-echo             ^<p^>Streamline your business operations with our comprehensive application suite.^</p^>
+echo             ^<div class="contact-content"^>
+echo                 ^<h2^>Ready to Transform Your Business?^</h2^>
+echo                 ^<p^>Join thousands of professionals who are already using AppLi to streamline their operations and drive growth.^</p^>
+echo                 ^<div class="cta-buttons"^>
+echo                     ^<a href="#services" class="cta-primary"^>Get Started Now^</a^>
+echo                 ^</div^>
+echo                 ^<div class="contact-info"^>
+echo                     ^<div class="contact-item"^>
+echo                         ^<span class="icon"^>📧^</span^>
+echo                         ^<strong^>Email Support^</strong^>
+echo                         ^<p^>support@appli.com^</p^>
+echo                     ^</div^>
+echo                     ^<div class="contact-item"^>
+echo                         ^<span class="icon"^>🌐^</span^>
+echo                         ^<strong^>Available 24/7^</strong^>
+echo                         ^<p^>Access tools anytime^</p^>
+echo                     ^</div^>
+echo                     ^<div class="contact-item"^>
+echo                         ^<span class="icon"^>⚡^</span^>
+echo                         ^<strong^>Instant Access^</strong^>
+echo                         ^<p^>No signup required^</p^>
+echo                     ^</div^>
+echo                 ^</div^>
+echo             ^</div^>
+echo         ^</div^>
+echo     ^</section^>
+echo.
+echo     ^<footer^>
+echo         ^<div class="container"^>
+echo             ^<p^>^&copy; 2025 AppLi Business Solutions. All rights reserved.^</p^>
+echo             ^<p^>Professional tools for modern businesses^</p^>
 echo         ^</div^>
 echo     ^</footer^>
 echo.
@@ -495,7 +678,7 @@ echo                 }
 echo             }^);
 echo         }^);
 echo.
-echo         // Add loading animation to app cards
+echo         // Add loading animation to service cards
 echo         const observerOptions = {
 echo             threshold: 0.1,
 echo             rootMargin: '0px 0px -50px 0px'
@@ -509,15 +692,16 @@ echo                 }
 echo             }^);
 echo         }, observerOptions^);
 echo.
-echo         document.querySelectorAll^('.app-card'^).forEach^(card =^> {
+echo         document.querySelectorAll^('.service-card, .value-item'^).forEach^(card =^> {
 echo             card.style.opacity = '0';
 echo             observer.observe^(card^);
 echo         }^);
 echo.
-echo         // Add click analytics ^(optional^)
-echo         document.querySelectorAll^('.app-link'^).forEach^(link =^> {
+echo         // Track service usage for analytics
+echo         document.querySelectorAll^('.service-link'^).forEach^(link =^> {
 echo             link.addEventListener^('click', function^(^) {
-echo                 console.log^(`Launching: ${this.textContent}`^);
+echo                 const serviceName = this.closest^('.service-card'^).querySelector^('h3'^).textContent;
+echo                 console.log^(`Customer accessing: ${serviceName}`^);
 echo             }^);
 echo         }^);
 echo     ^</script^>
@@ -530,55 +714,122 @@ move temp_index.html index.html
 
 goto :eof
 
-REM Function to add individual app card
-:add_app_card
+REM Function to add individual service card
+:add_service_card
 set "filename=%~1"
 set "basename=%~n1"
 set "displayname=%basename:_= %"
 
 REM Determine icon and description based on filename
 set "icon=📱"
-set "description=Professional business application designed to streamline your workflow and improve productivity."
+set "description=Professional business solution designed to streamline your workflow and improve productivity."
+set "feature1=Streamlined interface"
+set "feature2=Professional results"
+set "feature3=Easy to use"
+set "feature4=Instant access"
 
 echo %basename% | findstr /i "invoice" >nul && (
     set "icon=📊"
-    set "description=Create professional invoices quickly and efficiently. Generate branded invoices with automatic calculations and export options."
+    set "description=Create professional, branded invoices in minutes. Streamline your billing process and get paid faster."
+    set "feature1=Professional invoice templates"
+    set "feature2=Automatic calculations"
+    set "feature3=Brand customization"
+    set "feature4=Multiple export formats"
 )
 
 echo %basename% | findstr /i "finance" >nul && (
     set "icon=💰"
-    set "description=Comprehensive financial calculations including loan payments, investment returns, and budget planning tools."
+    set "description=Make informed financial decisions with our comprehensive calculation suite for loans, investments, and budgets."
+    set "feature1=Loan payment calculators"
+    set "feature2=Investment return analysis"
+    set "feature3=Budget planning tools"
+    set "feature4=Financial forecasting"
 )
 
 echo %basename% | findstr /i "price" >nul && (
     set "icon=📈"
-    set "description=Monitor product prices across multiple platforms, set alerts, and analyze market trends for better purchasing decisions."
+    set "description=Stay competitive with real-time price tracking across multiple platforms and intelligent market analysis."
+    set "feature1=Multi-platform price tracking"
+    set "feature2=Automated price alerts"
+    set "feature3=Market trend analysis"
+    set "feature4=Competitor monitoring"
 )
 
 echo %basename% | findstr /i "seo" >nul && (
     set "icon=🔍"
-    set "description=Optimize your website's search engine performance with keyword analysis, ranking tracking, and SEO auditing tools."
+    set "description=Improve your online visibility with professional SEO tools for keyword research, ranking analysis, and site audits."
+    set "feature1=Keyword research & analysis"
+    set "feature2=Ranking position tracking"
+    set "feature3=SEO site auditing"
+    set "feature4=Competitor analysis"
 )
 
 echo %basename% | findstr /i "social" >nul && (
     set "icon=📱"
-    set "description=Manage your social media presence with content scheduling, analytics, and engagement tracking across platforms."
+    set "description=Manage your social media presence efficiently with content scheduling, analytics, and engagement tracking."
+    set "feature1=Content scheduling"
+    set "feature2=Multi-platform management"
+    set "feature3=Engagement analytics"
+    set "feature4=Performance reporting"
 )
 
 echo %basename% | findstr /i "travel" >nul && (
     set "icon=✈️"
-    set "description=Plan and manage business trips with expense tracking, itinerary management, and travel optimization features."
+    set "description=Optimize your business travel with comprehensive planning tools, expense tracking, and itinerary management."
+    set "feature1=Trip planning & optimization"
+    set "feature2=Expense tracking"
+    set "feature3=Itinerary management"
+    set "feature4=Travel cost analysis"
+)
+
+echo %basename% | findstr /i "crm\|customer\|client" >nul && (
+    set "icon=👥"
+    set "description=Manage customer relationships with advanced CRM tools for contact management and sales tracking."
+    set "feature1=Contact management"
+    set "feature2=Sales pipeline tracking"
+    set "feature3=Communication history"
+    set "feature4=Customer analytics"
+)
+
+echo %basename% | findstr /i "project\|task\|manage" >nul && (
+    set "icon=📋"
+    set "description=Organize projects and tasks with professional management tools for teams and individuals."
+    set "feature1=Task organization"
+    set "feature2=Project timelines"
+    set "feature3=Team collaboration"
+    set "feature4=Progress tracking"
+)
+
+echo %basename% | findstr /i "report\|analytics\|dashboard" >nul && (
+    set "icon=📊"
+    set "description=Generate comprehensive reports and analytics dashboards to gain insights into business performance."
+    set "feature1=Custom report generation"
+    set "feature2=Data visualization"
+    set "feature3=Performance metrics"
+    set "feature4=Export capabilities"
+)
+
+echo %basename% | findstr /i "inventory\|stock\|warehouse" >nul && (
+    set "icon=📦"
+    set "description=Track inventory levels and manage stock with professional warehouse management tools."
+    set "feature1=Inventory tracking"
+    set "feature2=Stock level alerts"
+    set "feature3=Supplier management"
+    set "feature4=Order processing"
 )
 
 (
-echo                 ^<div class="app-card"^>
-echo                     ^<div class="app-icon"^>!icon!^</div^>
+echo                 ^<div class="service-card"^>
+echo                     ^<div class="service-icon"^>!icon!^</div^>
 echo                     ^<h3^>!displayname!^</h3^>
-echo                     ^<p^>!description!^</p^>
-echo                     ^<div class="app-links"^>
-echo                         ^<a href="!filename!" class="app-link"^>Launch App^</a^>
-echo                         ^<a href="https://github.com/Lojikli/AppLi/blob/master/!filename!" class="github-link" target="_blank"^>View Code^</a^>
-echo                     ^</div^>
+echo                     ^<p class="benefits"^>!description!^</p^>
+echo                     ^<ul class="service-features"^>
+echo                         ^<li^>!feature1!^</li^>
+echo                         ^<li^>!feature2!^</li^>
+echo                         ^<li^>!feature3!^</li^>
+echo                         ^<li^>!feature4!^</li^>
+echo                     ^</ul^>
+echo                     ^<a href="!filename!" class="service-link"^>Access This Service^</a^>
 echo                 ^</div^>
 ) >> temp_index.html
 

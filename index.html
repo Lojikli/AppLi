@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppLi - Professional Business Solutions</title>
+    <title>AppLi - Business Solutions That Drive Results</title>
+    <meta name="description" content="Professional business tools for invoicing, financial planning, SEO, social media management, and more. Streamline your operations today.">
     <style>
         * {
             margin: 0;
@@ -15,7 +16,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
         }
 
@@ -26,13 +27,14 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
 
         .header-content {
@@ -42,10 +44,12 @@
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav {
@@ -54,68 +58,130 @@
         }
 
         .nav a {
-            color: white;
+            color: #333;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         .nav a:hover {
-            color: #ffd700;
+            color: #1e3c72;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #1e3c72;
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
         }
 
         .hero {
             text-align: center;
-            padding: 4rem 0;
+            padding: 5rem 0;
             color: white;
+            background: linear-gradient(135deg, rgba(30,60,114,0.9), rgba(42,82,152,0.9));
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             animation: fadeInUp 1s ease-out;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+        .hero .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
             animation: fadeInUp 1s ease-out 0.2s both;
         }
 
-        .cta-button {
+        .hero .description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-primary {
             display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(45deg, #ffd700, #ffed4a);
-            color: #333;
+            padding: 18px 35px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
             font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 1s ease-out 0.4s both;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,107,53,0.3);
         }
 
-        .cta-button:hover {
+        .cta-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(255,107,53,0.4);
         }
 
-        .apps-section {
-            padding: 4rem 0;
-            background: rgba(255, 255, 255, 0.95);
-            margin: 2rem 0;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+        .cta-secondary {
+            display: inline-block;
+            padding: 18px 35px;
+            background: transparent;
+            color: white;
+            text-decoration: none;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: white;
+            color: #1e3c72;
+            transform: translateY(-3px);
+        }
+
+        .services-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
             color: #333;
             position: relative;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .section-title::after {
@@ -123,139 +189,198 @@
             display: block;
             width: 80px;
             height: 4px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            margin: 1rem auto;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            margin: 1.5rem auto;
             border-radius: 2px;
         }
 
-        .apps-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
 
-        .app-card {
+        .service-card {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 1px solid #f0f0f0;
         }
 
-        .app-card::before {
+        .service-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 5px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
         }
 
-        .app-card:hover {
+        .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
-        .app-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 15px;
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
             color: white;
+            box-shadow: 0 5px 15px rgba(30,60,114,0.3);
         }
 
-        .app-card h3 {
-            font-size: 1.4rem;
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .service-card .benefits {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            padding: 0.3rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .service-link {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .service-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30,60,114,0.3);
+        }
+
+        .value-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .value-item h3 {
+            font-size: 1.3rem;
             margin-bottom: 1rem;
             color: #333;
         }
 
-        .app-card p {
+        .value-item p {
             color: #666;
-            margin-bottom: 1.5rem;
             line-height: 1.6;
         }
 
-        .app-links {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .app-link {
-            display: inline-block;
-            padding: 10px 25px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .app-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .github-link {
-            display: inline-block;
-            padding: 10px 25px;
-            background: linear-gradient(45deg, #333, #555);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .github-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #555, #777);
-        }
-
-        .features {
+        .contact-section {
             padding: 4rem 0;
-            text-align: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
+            text-align: center;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .feature {
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .feature-icon {
+        .contact-section h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
+        .contact-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
         footer {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
+            background: #1a1a1a;
+            color: #ccc;
             text-align: center;
             padding: 2rem 0;
-            margin-top: 2rem;
         }
 
         @keyframes fadeInUp {
@@ -271,19 +396,29 @@
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
 ECHO is off.
-            .hero p {
-                font-size: 1.1rem;
+            .hero .subtitle {
+                font-size: 1.2rem;
             }
 ECHO is off.
-            .apps-grid {
+            .services-grid {
                 grid-template-columns: 1fr;
             }
 ECHO is off.
             .nav {
                 display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
             }
         }
     </style>
@@ -294,8 +429,8 @@ ECHO is off.
             <div class="header-content">
                 <div class="logo">AppLi</div>
                 <nav class="nav">
-                    <a href="#apps">Applications</a>
-                    <a href="#features">Features</a>
+                    <a href="#services">Services</a>
+                    <a href="#benefits">Benefits</a>
                     <a href="#contact">Contact</a>
                 </nav>
             </div>
@@ -304,124 +439,221 @@ ECHO is off.
 
     <section class="hero">
         <div class="container">
-            <h1>Professional Business Solutions</h1>
-            <p>Streamline your workflow with our comprehensive suite of business applications</p>
-            <a href="#apps" class="cta-button">Explore Applications</a>
+            <h1>Business Solutions That Drive Results</h1>
+            <p class="subtitle">Professional tools designed to streamline operations and boost productivity</p>
+            <p class="description">From invoice generation to financial planning, SEO optimization to social media management - we provide the comprehensive business tools you need to succeed.</p>
+            <div class="cta-buttons">
+                <a href="#services" class="cta-primary">Explore Our Services</a>
+                <a href="#contact" class="cta-secondary">Get Started Today</a>
+            </div>
         </div>
     </section>
 
-    <div class="container">
-        <section id="apps" class="apps-section">
-            <h2 class="section-title">Business Applications</h2>
-            <div class="apps-grid">
-                <div class="app-card">
-                    <div class="app-icon">📊</div>
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Professional Business Services</h2>
+                <p class="section-subtitle">Choose from our comprehensive suite of business tools designed to save time and increase efficiency</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
                     <h3>business invoice generator</h3>
-                    <p>Create professional invoices quickly and efficiently. Generate branded invoices with automatic calculations and export options.</p>
-                    <div class="app-links">
-                        <a href="business_invoice_generator.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/business_invoice_generator.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Create professional, branded invoices in minutes. Streamline your billing process and get paid faster.</p>
+                    <ul class="service-features">
+                        <li>Professional invoice templates</li>
+                        <li>Automatic calculations</li>
+                        <li>Brand customization</li>
+                        <li>Multiple export formats</li>
+                    </ul>
+                    <a href="business_invoice_generator.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">💰</div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>crypto stock tools suite</h3>
+                    <p class="benefits">Professional business solution designed to streamline your workflow and improve productivity.</p>
+                    <ul class="service-features">
+                        <li>Streamlined interface</li>
+                        <li>Professional results</li>
+                        <li>Easy to use</li>
+                        <li>Instant access</li>
+                    </ul>
+                    <a href="crypto_stock_tools_suite.html" class="service-link">Access This Service</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
                     <h3>finance calculator suite</h3>
-                    <p>Comprehensive financial calculations including loan payments, investment returns, and budget planning tools.</p>
-                    <div class="app-links">
-                        <a href="finance_calculator_suite.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/finance_calculator_suite.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Make informed financial decisions with our comprehensive calculation suite for loans, investments, and budgets.</p>
+                    <ul class="service-features">
+                        <li>Loan payment calculators</li>
+                        <li>Investment return analysis</li>
+                        <li>Budget planning tools</li>
+                        <li>Financial forecasting</li>
+                    </ul>
+                    <a href="finance_calculator_suite.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">📊</div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
                     <h3>invoice generator pro</h3>
-                    <p>Create professional invoices quickly and efficiently. Generate branded invoices with automatic calculations and export options.</p>
-                    <div class="app-links">
-                        <a href="invoice_generator_pro.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/invoice_generator_pro.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Create professional, branded invoices in minutes. Streamline your billing process and get paid faster.</p>
+                    <ul class="service-features">
+                        <li>Professional invoice templates</li>
+                        <li>Automatic calculations</li>
+                        <li>Brand customization</li>
+                        <li>Multiple export formats</li>
+                    </ul>
+                    <a href="invoice_generator_pro.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">📈</div>
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
                     <h3>price tracking suite</h3>
-                    <p>Monitor product prices across multiple platforms, set alerts, and analyze market trends for better purchasing decisions.</p>
-                    <div class="app-links">
-                        <a href="price_tracking_suite.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/price_tracking_suite.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Stay competitive with real-time price tracking across multiple platforms and intelligent market analysis.</p>
+                    <ul class="service-features">
+                        <li>Multi-platform price tracking</li>
+                        <li>Automated price alerts</li>
+                        <li>Market trend analysis</li>
+                        <li>Competitor monitoring</li>
+                    </ul>
+                    <a href="price_tracking_suite.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">🔍</div>
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
                     <h3>seo tools suite</h3>
-                    <p>Optimize your website's search engine performance with keyword analysis, ranking tracking, and SEO auditing tools.</p>
-                    <div class="app-links">
-                        <a href="seo_tools_suite.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/seo_tools_suite.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Improve your online visibility with professional SEO tools for keyword research, ranking analysis, and site audits.</p>
+                    <ul class="service-features">
+                        <li>Keyword research & analysis</li>
+                        <li>Ranking position tracking</li>
+                        <li>SEO site auditing</li>
+                        <li>Competitor analysis</li>
+                    </ul>
+                    <a href="seo_tools_suite.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">📱</div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
                     <h3>social media tools</h3>
-                    <p>Manage your social media presence with content scheduling, analytics, and engagement tracking across platforms.</p>
-                    <div class="app-links">
-                        <a href="social_media_tools.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/social_media_tools.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Manage your social media presence efficiently with content scheduling, analytics, and engagement tracking.</p>
+                    <ul class="service-features">
+                        <li>Content scheduling</li>
+                        <li>Multi-platform management</li>
+                        <li>Engagement analytics</li>
+                        <li>Performance reporting</li>
+                    </ul>
+                    <a href="social_media_tools.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">📱</div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>stock trading app</h3>
+                    <p class="benefits">Professional business solution designed to streamline your workflow and improve productivity.</p>
+                    <ul class="service-features">
+                        <li>Streamlined interface</li>
+                        <li>Professional results</li>
+                        <li>Easy to use</li>
+                        <li>Instant access</li>
+                    </ul>
+                    <a href="stock_trading_app.html" class="service-link">Access This Service</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
                     <h3>temp index</h3>
-                    <p>Professional business application designed to streamline your workflow and improve productivity.</p>
-                    <div class="app-links">
-                        <a href="temp_index.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/temp_index.html" class="github-link" target="_blank">View Code</a>
-                    </div>
+                    <p class="benefits">Professional business solution designed to streamline your workflow and improve productivity.</p>
+                    <ul class="service-features">
+                        <li>Streamlined interface</li>
+                        <li>Professional results</li>
+                        <li>Easy to use</li>
+                        <li>Instant access</li>
+                    </ul>
+                    <a href="temp_index.html" class="service-link">Access This Service</a>
                 </div>
-                <div class="app-card">
-                    <div class="app-icon">✈️</div>
+                <div class="service-card">
+                    <div class="service-icon">✈️</div>
                     <h3>travel tools suite</h3>
-                    <p>Plan and manage business trips with expense tracking, itinerary management, and travel optimization features.</p>
-                    <div class="app-links">
-                        <a href="travel_tools_suite.html" class="app-link">Launch App</a>
-                        <a href="https://github.com/Lojikli/AppLi/blob/master/travel_tools_suite.html" class="github-link" target="_blank">View Code</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title" style="color: white;">Why Choose AppLi?</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast & Efficient</h3>
-                    <p>Optimized applications that work seamlessly across all devices</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Secure & Private</h3>
-                    <p>Your data stays on your device with no external dependencies</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Professional Grade</h3>
-                    <p>Enterprise-quality tools designed for business professionals</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Always Updated</h3>
-                    <p>Regular updates with new features and improvements</p>
+                    <p class="benefits">Optimize your business travel with comprehensive planning tools, expense tracking, and itinerary management.</p>
+                    <ul class="service-features">
+                        <li>Trip planning & optimization</li>
+                        <li>Expense tracking</li>
+                        <li>Itinerary management</li>
+                        <li>Travel cost analysis</li>
+                    </ul>
+                    <a href="travel_tools_suite.html" class="service-link">Access This Service</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="contact">
+    <section id="benefits" class="value-section">
         <div class="container">
-            <p>&copy; 2025 AppLi - Professional Business Solutions. All rights reserved.</p>
-            <p>Streamline your business operations with our comprehensive application suite.</p>
+            <div class="section-header">
+                <h2 class="section-title">Why Choose AppLi?</h2>
+                <p class="section-subtitle">Professional-grade solutions designed for modern businesses</p>
+            </div>
+            <div class="value-grid">
+                <div class="value-item">
+                    <span class="value-icon">⚡</span>
+                    <h3>Instant Results</h3>
+                    <p>Start using our tools immediately - no downloads, installations, or complex setup required.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">💼</span>
+                    <h3>Professional Quality</h3>
+                    <p>Enterprise-grade tools designed by business professionals for business professionals.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">💰</span>
+                    <h3>Cost Effective</h3>
+                    <p>Get powerful business tools without the high costs of enterprise software subscriptions.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">🔒</span>
+                    <h3>Secure & Private</h3>
+                    <p>Your business data stays private and secure with client-side processing and no data storage.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">📱</span>
+                    <h3>Works Everywhere</h3>
+                    <p>Access your tools from any device - desktop, tablet, or mobile - with responsive design.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">🎯</span>
+                    <h3>Results Focused</h3>
+                    <p>Every tool is designed to deliver measurable improvements to your business operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <h2>Ready to Transform Your Business?</h2>
+                <p>Join thousands of professionals who are already using AppLi to streamline their operations and drive growth.</p>
+                <div class="cta-buttons">
+                    <a href="#services" class="cta-primary">Get Started Now</a>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="icon">📧</span>
+                        <strong>Email Support</strong>
+                        <p>support@appli.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">🌐</span>
+                        <strong>Available 24/7</strong>
+                        <p>Access tools anytime</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">⚡</span>
+                        <strong>Instant Access</strong>
+                        <p>No signup required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AppLi Business Solutions. All rights reserved.</p>
+            <p>Professional tools for modern businesses</p>
         </div>
     </footer>
 
@@ -440,7 +672,7 @@ ECHO is off.
             });
         });
 
-        // Add loading animation to app cards
+        // Add loading animation to service cards
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -454,15 +686,16 @@ ECHO is off.
             });
         }, observerOptions);
 
-        document.querySelectorAll('.app-card').forEach(card => {
+        document.querySelectorAll('.service-card, .value-item').forEach(card => {
             card.style.opacity = '0';
             observer.observe(card);
         });
 
-        // Add click analytics (optional)
-        document.querySelectorAll('.app-link').forEach(link => {
+        // Track service usage for analytics
+        document.querySelectorAll('.service-link').forEach(link => {
             link.addEventListener('click', function() {
-                console.log(`Launching: ${this.textContent}`);
+                const serviceName = this.closest('.service-card').querySelector('h3').textContent;
+                console.log(`Customer accessing: ${serviceName}`);
             });
         });
     </script>
